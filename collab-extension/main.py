@@ -21,11 +21,12 @@ class SequenceDiff:
     def edit_group(self, wf_group):
         for j, wf in enumerate(wf_group):
             if "sentence_index" not in wf:
-                self.diff_sequence[j].position = -1 if not j else -9999
+                sentence_index = -1 if not j else -9999
             else:
-                self.diff_sequence[j].position = wf["sentence_index"]
+                sentence_index = wf["sentence_index"]
 
             if self.diff_sequence[j] is None:
+                self.index_based_diff.append([sentence_index, None])
                 continue
 
             for diff_key in self.diff_sequence[j].diff:
@@ -33,22 +34,29 @@ class SequenceDiff:
                     continue
                 dk_value = self.diff_sequence[j].diff[diff_key]
                 if diff_key == "pos":
-                    wf["ana"]["gr.pos"] = dk_value
+                    wf_group[j]["ana"]["gr.pos"] = dk_value
                 elif diff_key == "wf":
-                    wf["wf"] = dk_value
+                    wf_group[j]["wf"] = dk_value
                 elif diff_key in ["lex", "parts", "gloss"]:
-                    wf["ana"][diff_key] = dk_value
+                    wf_group[j]["ana"][diff_key] = dk_value
 
             for (tb_key, tb_value) in self.diff_sequence[j].diff["trackbacks"].items():
                 for (ana_key, ana_value) in wf["ana"].items():
                     if ana_value == tb_value:
                         self.diff_sequence[j].reverse_trackback(tb_key, ana_key)
-                        wf["ana"][ana_key] = tb_value
+                        wf_group[j]["ana"][ana_key] = tb_value
 
-        return self.diff_sequence
+            self.index_based_diff.append([sentence_index, self.diff_sequence[j]])
 
-    def summarize_diff(self):
+        return wf_group
 
+    def summarize_diff(self, parent_diff_id):
+        diff_data = {
+            "parent_diff": parent_diff_id,
+            "current_diff": "".join(random.choice("1234567890abcd") for _ in range(20)),
+            "diff_sequence": self.index_based_diff
+        }
+        return diff_data
 
 
 class TokenDiff:

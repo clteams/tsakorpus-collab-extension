@@ -12,7 +12,7 @@ var CollabExtension = {
             }
         }
         $(".edit_parent, .edit_glyph").unbind('click');
-        $(".edit_parent, .edit_glyph").bind("click.edit_popup", function () {
+        $(".edit_parent").bind("click.edit_popup", function () {
             CollabExtension.callEditPopup($(this));
         })
     },

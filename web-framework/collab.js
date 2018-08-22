@@ -11,5 +11,12 @@ var CollabExtension = {
                 local_cx.append(edit_button);
             }
         }
+        $(".edit_parent, .edit_glyph").unbind('click');
+        $(".edit_parent, .edit_glyph").bind("click.edit_popup", function () {
+            CollabExtension.callEditPopup($(this));
+        })
+    },
+    callEditPopup: function (el) {
+        console.log(el);
     }
 };

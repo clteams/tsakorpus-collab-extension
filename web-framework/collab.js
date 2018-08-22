@@ -1,5 +1,5 @@
 var CollabExtension = {
-    append_buttons: function () {
+    appendButtons: function () {
         var cx_main = $(".cx_main");
         for (var i = 0; i < cx_main.length; i ++) {
             var local_cx = $(cx_main[i]);

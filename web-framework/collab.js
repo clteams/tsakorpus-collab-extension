@@ -13,10 +13,25 @@ var CollabExtension = {
         }
         $(".edit_parent, .edit_glyph").unbind('click');
         $(".edit_parent").bind("click.edit_popup", function () {
-            CollabExtension.callEditPopup($(this));
+            CollabExtension.callEditPopup($(this).parent().find(".sentence .sent_lang").first());
         })
     },
     callEditPopup: function (el) {
+        // $($($(".sent_lang")[0]).find("span")[0]).attr('data-ana')
         console.log(el);
+    },
+    makeInitialStructure: function (sent_lang_obj) {
+        var slo = sent_lang_obj;
+        var slo_words = sent_lang_obj.find(".word");
+        var parsed_structure = [];
+        for (var i = 0; i < slo_words.length; i ++) {
+            parsed_structure.push(CollabExtension.parseDataAna($(slo_words[i]).attr("data-ana")));
+        }
+        return parsed_structure;
+    },
+    parseDataAna: function (data_ana) {
+        data_ana = $(data_ana);
+        var pw = data_ana.find(".popup_word");
+        // ...
     }
 };

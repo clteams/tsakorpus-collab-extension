@@ -1,3 +1,9 @@
 .edit_glyph {
     font-size: 20px;
 }
+
+.edit-dialog-token {
+    color: #ffa500;
+    font-size: 17px;
+    text-decoration: underline;
+}

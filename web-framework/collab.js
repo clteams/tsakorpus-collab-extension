@@ -26,9 +26,9 @@ var CollabExtension = {
         common_dialog_content += CollabExtension.message("editDocument") + '">';
         for (var k = 0; k < el_is.length; k ++) {
             common_dialog_content += '<a href="#" onclick="CollabExtension.callTokenDialog(\'' + bid + '\', ';
-            common_dialog_content += k.toString() + ')">' + el_is[k].token + '</a>&nbsp;';
-            common_dialog_content = common_dialog_content.replace(/&nbsp;$/, "");
+            common_dialog_content += k.toString() + ')" class="edit-dialog-token">' + el_is[k].token + '</a>&nbsp;';
         }
+        common_dialog_content = common_dialog_content.replace(/&nbsp;$/, "");
         common_dialog_content += '</div>';
         el.parent().append(common_dialog_content);
         CollabExtension.submitFunctions[bid] = function () {

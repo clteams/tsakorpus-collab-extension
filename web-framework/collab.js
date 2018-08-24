@@ -18,8 +18,8 @@ var CollabExtension = {
         })
     },
     callEditPopup: function (el) {
-        // $(".sent_lang").eq(0).find("span").eq(0).attr('data-ana')
-        CollabExtension.makeInitialStructure(el);
+        var el_is = CollabExtension.makeInitialStructure(el.parent().find(".sentence .sent_lang").eq(0));
+        CollabExtension.initialStructures[el.attr("button-id")] = el_is;
     },
     createEditButtonID: function () {
         var button_id = "";
@@ -29,6 +29,7 @@ var CollabExtension = {
         }
         return button_id;
     },
+    initialStructures: {},
     makeInitialStructure: function (sent_lang_obj) {
         var slo = sent_lang_obj;
         var slo_words = sent_lang_obj.find(".word");

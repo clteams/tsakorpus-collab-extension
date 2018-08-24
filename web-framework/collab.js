@@ -40,16 +40,16 @@ var CollabExtension = {
             wf_diff.push({
                 "wf": pw_wf.text()
             });
-            wf_diff[i].lex = ana_group.find(".popup_lex");
+            wf_diff[i].lex = ana_group.find(".popup_lex").text();
             wf_diff[i].parts = ana_group.find(".popup_gloss .popup_value").eq(0).text();
             wf_diff[i].gloss = ana_group.find(".popup_gloss .popup_value").eq(0).text();
-            if (ana_group.find(".popup_pos").eq(0).text()) {
-                wf_diff[i].pos = ana_group.find(".popup_pos").eq(0).text();
+            if (ana_group.find(".popup_pos").text()) {
+                wf_diff[i].pos = ana_group.find(".popup_pos").text();
             } else {
                 wf_diff[i].pos = null;
             }
             wf_diff[i].trackbacks = [];
-            var trackbacks = pw_ana_groups.eq(1).find(".popup_field");
+            var trackbacks = ana_group.find(".popup_field");
             for (var j = 0; j < trackbacks.length; j ++) {
                 var pk = trackbacks.eq(j).find(".popup_key").text();
                 var pv = trackbacks.eq(j).find(".popup_value").text();

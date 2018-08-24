@@ -14,11 +14,11 @@ var CollabExtension = {
         }
         $(".edit_parent, .edit_glyph").unbind('click');
         $(".edit_parent").bind("click.edit_popup", function () {
-            CollabExtension.callEditPopup($(this).parent().find(".sentence .sent_lang").first());
+            CollabExtension.callEditPopup($(this));
         })
     },
     callEditPopup: function (el) {
-        var el_is = CollabExtension.makeInitialStructure(el.parent().find(".sentence .sent_lang").eq(0));
+        var el_is = CollabExtension.makeInitialStructure(el.parent().find(".sentence .sent_lang").first());
         CollabExtension.initialStructures[el.attr("button-id")] = el_is;
     },
     createEditButtonID: function () {

@@ -25,7 +25,7 @@ var CollabExtension = {
         var slo_words = sent_lang_obj.find(".word");
         var parsed_structure = [];
         for (var i = 0; i < slo_words.length; i ++) {
-            parsed_structure.push(CollabExtension.parseTokenAna(slo_words.eq(i).attr("data-ana"));
+            parsed_structure.push(CollabExtension.parseTokenAna(slo_words.eq(i).attr("data-ana")));
         }
         return parsed_structure;
     },

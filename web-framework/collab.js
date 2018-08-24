@@ -19,7 +19,39 @@ var CollabExtension = {
     },
     callEditPopup: function (el) {
         var el_is = CollabExtension.makeInitialStructure(el.parent().find(".sentence .sent_lang").first());
-        CollabExtension.initialStructures[el.attr("button-id")] = el_is;
+        var bid = el.attr("button-id");
+        CollabExtension.initialStructures[bid] = el_is;
+        var common_dialog_id = "common-dialog-id-" + bid;
+        var common_dialog_content = '<div id="' + common_dialog_id + '" title="' + \
+            CollabExtension.message("editDocument") + '">';
+        for (var k = 0; k < el_is.length; k ++) {
+            common_dialog_content += '<a href="#" onclick="CollabExtension.callTokenDialog(\'' + bid + '\', ';
+            common_dialog_content += k.toString() + ')">' + el_is[k].token + '</a>&nbsp;';
+            common_dialog_content = common_dialog_content.replace(/&nbsp;$/, "");
+        }
+        common_dialog_content += '</div>';
+        el.parent().append(common_dialog_content);
+        CollabExtension.submitFunctions[bid] = function () {
+            CollabExtension.submitDiffOn(bid);
+        };
+        CollabExtension.buttonDialogs[bid] = {
+            commonDialog: null, // ...
+            tokenDialogs: [] // ...
+        };
+        CollabExtension.buttonDialogs[bid].commonDialog = $("#" + common_dialog_id).dialog({
+            autoOpen: false,
+            height: 200,
+            width: 800,
+            modal: true,
+            buttons: {
+                CollabExtension.message("submitEdits"): addUser,
+                Cancel: function() {
+                    CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
+                }
+            },
+            close: function() {}
+        });
+        CollabExtension.buttonDialogs[bid].commonDialog.dialog("open");
     },
     createEditButtonID: function () {
         var button_id = "";
@@ -30,6 +62,9 @@ var CollabExtension = {
         return button_id;
     },
     initialStructures: {},
+    buttonDialogs: {},
+    diffsOnStructures: {},
+    submitFunctions: {},
     makeInitialStructure: function (sent_lang_obj) {
         var slo = sent_lang_obj;
         var slo_words = sent_lang_obj.find(".word");
@@ -72,6 +107,10 @@ var CollabExtension = {
             }
         }
         return {token: pw_wf.text(), anaData: wf_diff};
+    },
+    submitDiffOn: function (bid) {
+        // login
+        // merge diff
     },
     diffValue: {
         trackbackValue: {
@@ -125,6 +164,18 @@ var CollabExtension = {
             action: "add",
             anaIndex: null,
             anaValues: []
+        }
+    },
+    interfaceLanguage: "ru",
+    message: function (messageKey) {
+        return CollabExtension.interfaceMessages[messageKey][CollabExtension.interfaceLanguage];
+    }
+    interfaceMessages: {
+        "editDocument": {
+            "ru": "Редактирование документа"
+        },
+        "submitEdits": {
+            "ru": "Отправить изменения"
         }
     }
 };

@@ -18,7 +18,7 @@ var CollabExtension = {
     },
     callEditPopup: function (el) {
         // $(".sent_lang").eq(0).find("span").eq(0).attr('data-ana')
-        console.log(el);
+        CollabExtension.makeInitialStructure(el);
     },
     makeInitialStructure: function (sent_lang_obj) {
         var slo = sent_lang_obj;

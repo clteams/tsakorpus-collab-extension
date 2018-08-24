@@ -22,8 +22,8 @@ var CollabExtension = {
         var bid = el.attr("button-id");
         CollabExtension.initialStructures[bid] = el_is;
         var common_dialog_id = "common-dialog-id-" + bid;
-        var common_dialog_content = '<div id="' + common_dialog_id + '" title="' + \
-            CollabExtension.message("editDocument") + '">';
+        var common_dialog_content = '<div id="' + common_dialog_id + '" title="';
+        common_dialog_content += CollabExtension.message("editDocument") + '">';
         for (var k = 0; k < el_is.length; k ++) {
             common_dialog_content += '<a href="#" onclick="CollabExtension.callTokenDialog(\'' + bid + '\', ';
             common_dialog_content += k.toString() + ')">' + el_is[k].token + '</a>&nbsp;';

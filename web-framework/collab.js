@@ -170,7 +170,7 @@ var CollabExtension = {
     interfaceLanguage: "ru",
     message: function (messageKey) {
         return CollabExtension.interfaceMessages[messageKey][CollabExtension.interfaceLanguage];
-    }
+    },
     interfaceMessages: {
         "editDocument": {
             "ru": "Редактирование документа"

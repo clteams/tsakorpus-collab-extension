@@ -38,17 +38,18 @@ var CollabExtension = {
             commonDialog: null, // ...
             tokenDialogs: [] // ...
         };
+        var buttons = {
+            Cancel: function() {
+                CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
+            }
+        };
+        buttons[CollabExtension.message("submitEdits")] = CollabExtension.submitFunctions[bid];
         CollabExtension.buttonDialogs[bid].commonDialog = $("#" + common_dialog_id).dialog({
             autoOpen: false,
             height: 200,
             width: 800,
             modal: true,
-            buttons: {
-                CollabExtension.message("submitEdits"): addUser,
-                Cancel: function() {
-                    CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
-                }
-            },
+            buttons: buttons,
             close: function() {}
         });
         CollabExtension.buttonDialogs[bid].commonDialog.dialog("open");

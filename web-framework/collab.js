@@ -42,7 +42,7 @@ var CollabExtension = {
             });
             wf_diff[i].lex = ana_group.find(".popup_lex").text();
             wf_diff[i].parts = ana_group.find(".popup_gloss .popup_value").eq(0).text();
-            wf_diff[i].gloss = ana_group.find(".popup_gloss .popup_value").eq(0).text();
+            wf_diff[i].gloss = ana_group.find(".popup_gloss .popup_value").eq(1).text();
             if (ana_group.find(".popup_pos").text()) {
                 wf_diff[i].pos = ana_group.find(".popup_pos").text();
             } else {

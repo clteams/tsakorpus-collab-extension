@@ -71,7 +71,7 @@ var CollabExtension = {
                 }
             }
         }
-        return wf_diff;
+        return {token: pw_wf.text(), anaData: wf_diff};
     },
     diffValue: {
         trackbackValue: {

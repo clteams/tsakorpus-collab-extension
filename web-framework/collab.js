@@ -47,6 +47,7 @@ var CollabExtension = {
         common_dialog_content += '</div>';
         el.parent().append(common_dialog_content);
         for (var k = 0; k < el_is.length; k ++) {
+            var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
             CollabExtension.diffSubmitters[bid] = function () {
                 CollabExtension.submitTokenDiff(bid, k);
             };

@@ -75,7 +75,9 @@ var CollabExtension = {
         });
         CollabExtension.buttonDialogs[bid].commonDialog.dialog("open");
     },
-    createEditButtonID: function () { CollabExtension.createRandomID() },
+    createEditButtonID: function () {
+        return CollabExtension.createRandomID()
+    },
     createRandomID: function () {
         var button_id = "";
         var hex_array = "0123456789abcdef";

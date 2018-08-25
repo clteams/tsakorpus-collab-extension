@@ -118,7 +118,7 @@ var CollabExtension = {
             var sv = '<div class="ana-simple-value">';
             sv += '<button type="button" onclick="CollabExtension.anaGroupRemove.simpleValue(this)">';
             sv += CollabExtension.message("removeAnaValue") + '</button>';
-            sv += '<simple-value-key key="' + key + '></simple-value-key>';
+            sv += '<simple-value-key key="' + key + '"></simple-value-key>';
             sv += '<label for="simple-value-value">' + key + ':</label>';
             sv += $('<input type="text" name="simple-value-value">').attr("value", value).get()[0].outerHTML;
             sv += '</div>';

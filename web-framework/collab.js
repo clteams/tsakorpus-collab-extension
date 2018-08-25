@@ -47,7 +47,7 @@ var CollabExtension = {
         buttons[CollabExtension.message("submitEdits")] = CollabExtension.submitFunctions[bid];
         CollabExtension.buttonDialogs[bid].commonDialog = $("#" + common_dialog_id).dialog({
             autoOpen: false,
-            height: 100,
+            height: 300,
             width: 800,
             modal: true,
             buttons: buttons,

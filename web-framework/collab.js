@@ -42,6 +42,11 @@ var CollabExtension = {
         for (var k = 0; k < el_is.length; k ++) {
             var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
             common_dialog_content += CollabExtension.createTokenDialog(token_dialog_id, el_is[k].anaData);
+        }
+        //
+        common_dialog_content += '</div>';
+        el.parent().append(common_dialog_content);
+        for (var k = 0; k < el_is.length; k ++) {
             CollabExtension.diffSubmitters[bid] = function () {
                 CollabExtension.submitTokenDiff(bid, k);
             };
@@ -51,19 +56,16 @@ var CollabExtension = {
                 }
             };
             buttons[CollabExtension.message("submitTokenDiff")] = CollabExtension.diffSubmitters[token_dialog_id];
-            var local_dialog = $("#" + token_dialog_id).dialog({
+            CollabExtension.buttonDialogs[bid].tokenDialogs.push(
+            $("#" + token_dialog_id).dialog({
                 autoOpen: false,
                 height: 300,
                 width: 400,
                 modal: true,
                 buttons: buttons,
                 close: function() {}
-            });
-            CollabExtension.buttonDialogs[bid].tokenDialogs.push(local_dialog);
+            }));
         }
-        //
-        common_dialog_content += '</div>';
-        el.parent().append(common_dialog_content);
         CollabExtension.submitFunctions[bid] = function () {
             CollabExtension.submitDiffOn(bid);
         };

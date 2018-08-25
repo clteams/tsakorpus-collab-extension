@@ -21,6 +21,10 @@ var CollabExtension = {
         var el_is = CollabExtension.makeInitialStructure(el.parent().find(".sentence .sent_lang").first());
         var bid = el.attr("button-id");
         CollabExtension.initialStructures[bid] = el_is;
+        CollabExtension.buttonDialogs[bid] = {
+            commonDialog: null, // ...
+            tokenDialogs: [] // ...
+        };
         var common_dialog_id = "common-dialog-id-" + bid;
         var common_dialog_content = '<div id="' + common_dialog_id + '" title="';
         common_dialog_content += CollabExtension.message("editDocument") + '">';
@@ -30,14 +34,17 @@ var CollabExtension = {
             common_dialog_content += k.toString() + ')" class="edit-dialog-token">' + el_is[k].token + '</a>&nbsp;';
         }
         common_dialog_content = common_dialog_content.replace(/&nbsp;$/, "");
-        common_dialog_content += '</div></div>';
+        common_dialog_content += '</div>';
+        // Create token dialogs
+        for (var k = 0; k < el_is.length; k ++) {
+            var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
+            var common_dialog_content += CollabExtension.createTokenDialog(token_dialog_id, el_is[k].anaData);
+        }
+        //
+        common_dialog_content += '</div>';
         el.parent().append(common_dialog_content);
         CollabExtension.submitFunctions[bid] = function () {
             CollabExtension.submitDiffOn(bid);
-        };
-        CollabExtension.buttonDialogs[bid] = {
-            commonDialog: null, // ...
-            tokenDialogs: [] // ...
         };
         var buttons = {
             Cancel: function() {
@@ -55,13 +62,64 @@ var CollabExtension = {
         });
         CollabExtension.buttonDialogs[bid].commonDialog.dialog("open");
     },
-    createEditButtonID: function () {
+    createEditButtonID: function () { createRandomID() },
+    createRandomID: function () {
         var button_id = "";
         var hex_array = "0123456789abcdef";
         for (var i = 0; i < 10; i ++) {
             button_id += hex_array.charAt(Math.floor(Math.random() * hex_array.length))
         }
         return button_id;
+    },
+    createTokenDialog: function (tokenDialogID, anaData) {
+        var token_dialog_content = '<div id="' + tokenDialogID + '" title="' + CollabExtension.message("editToken");
+        token_dialog_content += '">';
+        if (!anaData) {
+            token_dialog_content += '<div class="no-ana-groups">' + CollabExtension.message("noAnaGroups") + '</div>';
+        }
+        else {
+            for (var a = 0; a < anaData.length; a ++) {
+                token_dialog_content += CollabExtension.deployAnaGroup(anaData[a], true);
+            }
+        }
+        token_dialog_content += '<input class="ana-groups-events" value="[]">';
+        token_dialog_content += '</div>';
+    },
+    deployAnaGroup: function (anaGroup, isDefault) {
+        var deployed_ana = '<div class="ana-group">';
+
+        deployed_ana += '<input class="ana-values-events" value="[]">';
+        deployed_ana += '</div>';
+    },
+    anaGroupAdd: {
+        simpleValue: function (key, value) {
+            var sv = '<div class="ana-simple-value">';
+            sv += '<button type="button" onclick="CollabExtension.anaGroupRemove.simpleValue(this)">';
+            sv += CollabExtension.message("removeAnaValue") + '</button>';
+            sv += '<simple-value-key key="' + key + '></simple-value-key>';
+            sv += '<label for="simple-value-value">' + key + ':</label>';
+            sv += $('<input type="text" name="simple-value-value">').attr("value", value).get()[0].outerHTML;
+            sv += '</div>';
+        }
+    },
+    anaGroupRemove: {
+        simpleValue: function (button_element) {
+            button_element = $(button_element);
+            var sv_key = button_element.parent().find("simple-value-key").attr("key");
+
+        }
+    },
+    getValuesEvents: function (anaGroup) {
+        return JSON.parse($(anaGroup).find(".ana-values-events").val());
+    },
+    setValuesEvents: function (anaGroup, newValuesEvents) {
+        $(anaGroup).find(".ana-values-events").val(JSON.stringify(newValuesEvents));
+    },
+    getGroupsEvents: function (tokenDialog) {
+        return JSON.parse($(tokenDialog).find(".ana-groups-events").val());
+    },
+    setGroupsEvents: function (tokenDialog, newGroupsEvents) {
+        $(tokenDialog).find(".ana-groups-events").val(JSON.stringify(newGroupsEvents));
     },
     initialStructures: {},
     buttonDialogs: {},
@@ -176,6 +234,15 @@ var CollabExtension = {
         "editDocument": {
             "ru": "Редактирование документа"
         },
+        "editToken": {
+            "ru": "Редактирование токена"
+        },
+        "noAnaGroups": {
+            "ru": "Для этого токена не указано ни одного разбора"
+        },
+        "removeAnaValue": {
+            "ru": "Удалить"
+        }
         "submitEdits": {
             "ru": "Отправить изменения"
         }

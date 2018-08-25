@@ -97,6 +97,7 @@ var CollabExtension = {
         }
         token_dialog_content += '<input type="hidden" class="ana-groups-events" value="[]">';
         token_dialog_content += '</div>';
+        return token_dialog_content;
     },
     deployAnaGroup: function (anaGroup, isDefault) {
         var deployed_ana = '<div class="ana-group">';

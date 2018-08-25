@@ -17,6 +17,9 @@ var CollabExtension = {
             CollabExtension.callEditPopup($(this));
         })
     },
+    callTokenDialog: function (bid, index) {
+        CollabExtension.buttonDialogs[bid].tokenDialogs[index].dialog("open");
+    },
     callEditPopup: function (el) {
         var el_is = CollabExtension.makeInitialStructure(el.parent().find(".sentence .sent_lang").first());
         var bid = el.attr("button-id");
@@ -39,6 +42,16 @@ var CollabExtension = {
         for (var k = 0; k < el_is.length; k ++) {
             var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
             var common_dialog_content += CollabExtension.createTokenDialog(token_dialog_id, el_is[k].anaData);
+            CollabExtension.buttonDialogs[bid].tokenDialogs.push(
+                $("#" + token_dialog_id).dialog({
+                    autoOpen: false,
+                    height: 300,
+                    width: 400,
+                    modal: true,
+                    //buttons: buttons,
+                    close: function() {}
+                })
+            );
         }
         //
         common_dialog_content += '</div>';

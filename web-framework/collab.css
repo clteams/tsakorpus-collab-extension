@@ -3,7 +3,12 @@
 }
 
 .edit-dialog-token {
-    color: #ffa500;
+    color: #ffa500 !important;
     font-size: 17px;
-    text-decoration: underline;
+    text-decoration: underline !important;
+}
+
+.token-sequence-wrapper {
+    width: 770px !important;
+    word-wrap: break-word !important;
 }

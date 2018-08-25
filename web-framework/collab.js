@@ -24,12 +24,13 @@ var CollabExtension = {
         var common_dialog_id = "common-dialog-id-" + bid;
         var common_dialog_content = '<div id="' + common_dialog_id + '" title="';
         common_dialog_content += CollabExtension.message("editDocument") + '">';
+        common_dialog_content += '<div class="token-sequence-wrapper">';
         for (var k = 0; k < el_is.length; k ++) {
             common_dialog_content += '<a href="#" onclick="CollabExtension.callTokenDialog(\'' + bid + '\', ';
             common_dialog_content += k.toString() + ')" class="edit-dialog-token">' + el_is[k].token + '</a>&nbsp;';
         }
         common_dialog_content = common_dialog_content.replace(/&nbsp;$/, "");
-        common_dialog_content += '</div>';
+        common_dialog_content += '</div></div>';
         el.parent().append(common_dialog_content);
         CollabExtension.submitFunctions[bid] = function () {
             CollabExtension.submitDiffOn(bid);
@@ -46,7 +47,7 @@ var CollabExtension = {
         buttons[CollabExtension.message("submitEdits")] = CollabExtension.submitFunctions[bid];
         CollabExtension.buttonDialogs[bid].commonDialog = $("#" + common_dialog_id).dialog({
             autoOpen: false,
-            height: 200,
+            height: 100,
             width: 800,
             modal: true,
             buttons: buttons,

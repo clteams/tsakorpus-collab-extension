@@ -267,7 +267,7 @@ var CollabExtension = {
         },
         "removeAnaValue": {
             "ru": "Удалить"
-        }
+        },
         "submitEdits": {
             "ru": "Отправить изменения"
         }

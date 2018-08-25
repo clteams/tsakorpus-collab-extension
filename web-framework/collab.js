@@ -41,7 +41,7 @@ var CollabExtension = {
         // Create token dialogs
         for (var k = 0; k < el_is.length; k ++) {
             var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
-            var common_dialog_content += CollabExtension.createTokenDialog(token_dialog_id, el_is[k].anaData);
+            common_dialog_content += CollabExtension.createTokenDialog(token_dialog_id, el_is[k].anaData);
             CollabExtension.buttonDialogs[bid].tokenDialogs.push(
                 $("#" + token_dialog_id).dialog({
                     autoOpen: false,

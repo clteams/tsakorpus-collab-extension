@@ -42,13 +42,22 @@ var CollabExtension = {
         for (var k = 0; k < el_is.length; k ++) {
             var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
             common_dialog_content += CollabExtension.createTokenDialog(token_dialog_id, el_is[k].anaData);
+            CollabExtension.diffSubmitters[bid] = function () {
+                CollabExtension.submitTokenDiff(bid, k);
+            };
+            var buttons = {
+                Cancel: function() {
+                    CollabExtension.buttonDialogs[bid].tokenDialogs[k].dialog("close");
+                }
+            };
+            buttons[CollabExtension.message("submitTokenDiff")] = CollabExtension.diffSubmitters[token_dialog_id];
             CollabExtension.buttonDialogs[bid].tokenDialogs.push(
                 $("#" + token_dialog_id).dialog({
                     autoOpen: false,
                     height: 300,
                     width: 400,
                     modal: true,
-                    //buttons: buttons,
+                    buttons: buttons,
                     close: function() {}
                 })
             );
@@ -74,6 +83,9 @@ var CollabExtension = {
             close: function() {}
         });
         CollabExtension.buttonDialogs[bid].commonDialog.dialog("open");
+    },
+    submitTokenDiff: function (bid, index) {
+        console.log(bid, index);
     },
     createEditButtonID: function () {
         return CollabExtension.createRandomID()
@@ -153,9 +165,11 @@ var CollabExtension = {
         $(tokenDialog).find(".ana-groups-events").val(JSON.stringify(newGroupsEvents));
     },
     initialStructures: {},
+    wfDiffSequences: {},
     buttonDialogs: {},
     diffsOnStructures: {},
     submitFunctions: {},
+    diffSubmitters: {},
     makeInitialStructure: function (sent_lang_obj) {
         var slo = sent_lang_obj;
         var slo_words = sent_lang_obj.find(".word");
@@ -276,6 +290,9 @@ var CollabExtension = {
         },
         "submitEdits": {
             "ru": "Отправить изменения"
+        },
+        "submitTokenDiff": {
+            "ru": "Сохранить"
         }
     }
 };

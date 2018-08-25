@@ -82,13 +82,17 @@ var CollabExtension = {
                 token_dialog_content += CollabExtension.deployAnaGroup(anaData[a], true);
             }
         }
-        token_dialog_content += '<input class="ana-groups-events" value="[]">';
+        token_dialog_content += '<input type="hidden" class="ana-groups-events" value="[]">';
         token_dialog_content += '</div>';
     },
     deployAnaGroup: function (anaGroup, isDefault) {
         var deployed_ana = '<div class="ana-group">';
-
-        deployed_ana += '<input class="ana-values-events" value="[]">';
+        // insert simple values
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("lex", anaGroup.lex);
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts);
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts);
+        //
+        deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         deployed_ana += '</div>';
     },
     anaGroupAdd: {
@@ -106,7 +110,15 @@ var CollabExtension = {
         simpleValue: function (button_element) {
             button_element = $(button_element);
             var sv_key = button_element.parent().find("simple-value-key").attr("key");
-
+            var parent_ana_group = button_element.parent().parent();
+            var new_ve = CollabExtension.getValuesEvents(parent_ana_group);
+            var remove_event = $.extend({}, CollabExtension.diffValue.simpleValue.remove);
+            remove_event.key = sv_key;
+            new_ve.push(remove_event);
+            CollabExtension.setValuesEvents(
+                parent_ana_group,
+                new_ve
+            );
         }
     },
     getValuesEvents: function (anaGroup) {

@@ -122,6 +122,7 @@ var CollabExtension = {
             sv += '<label for="simple-value-value">' + key + ':</label>';
             sv += $('<input type="text" name="simple-value-value">').attr("value", value).get()[0].outerHTML;
             sv += '</div>';
+            return sv;
         }
     },
     anaGroupRemove: {

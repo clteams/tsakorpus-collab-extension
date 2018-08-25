@@ -51,16 +51,15 @@ var CollabExtension = {
                 }
             };
             buttons[CollabExtension.message("submitTokenDiff")] = CollabExtension.diffSubmitters[token_dialog_id];
-            CollabExtension.buttonDialogs[bid].tokenDialogs.push(
-                $("#" + token_dialog_id).dialog({
-                    autoOpen: false,
-                    height: 300,
-                    width: 400,
-                    modal: true,
-                    buttons: buttons,
-                    close: function() {}
-                })
-            );
+            var local_dialog = $("#" + token_dialog_id).dialog({
+                autoOpen: false,
+                height: 300,
+                width: 400,
+                modal: true,
+                buttons: buttons,
+                close: function() {}
+            });
+            CollabExtension.buttonDialogs[bid].tokenDialogs.push(local_dialog);
         }
         //
         common_dialog_content += '</div>';

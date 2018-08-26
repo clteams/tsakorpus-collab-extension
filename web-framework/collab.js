@@ -129,9 +129,9 @@ var CollabExtension = {
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         if (!isDefault) {
             deployed_ana += '<script>var p2=$(this).parent().parent();var ge=CollabExtension.getGroupsEvents(p2);';
-            deployed_ana += 'var ag=$.extend({}, CollabExtension.diffAna.add);';
+            deployed_ana += 'var ag=$.extend({},CollabExtension.diffAna.add);';
             deployed_ana += 'ag.anaIndex=' + anaIndex + ';';
-            deployed_ana += 'ge.push(ag);CollabExtension.setGroupsEvents(p2, ge);';
+            deployed_ana += 'ge.push(ag);CollabExtension.setGroupsEvents(p2,ge);';
             deployed_ana += '</script>';
         }
         deployed_ana += '</div>';

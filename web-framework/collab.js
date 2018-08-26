@@ -87,6 +87,7 @@ var CollabExtension = {
         CollabExtension.buttonDialogs[bid].commonDialog.dialog("open");
     },
     submitTokenDiff: function (bid, index) {
+        // diffAna.add with anaValues=[]
         console.log(bid, index);
     },
     createEditButtonID: function () {
@@ -120,7 +121,10 @@ var CollabExtension = {
         // insert simple values
         deployed_ana += CollabExtension.anaGroupAdd.simpleValue("lex", anaGroup.lex);
         deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts);
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts);
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("gloss", anaGroup.gloss);
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue(
+            "pos", (anaGroup.pos !== null ? anaGroup.pos : "")
+        );
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         deployed_ana += '</div>';
@@ -134,7 +138,9 @@ var CollabExtension = {
             sv += CollabExtension.message("removeAnaValue") + '</button>';
             sv += '<simple-value-key key="' + key + '"></simple-value-key>';
             sv += '<label for="simple-value-value">' + key + ':</label>';
-            sv += $('<input type="text" name="simple-value-value">').attr("value", value).get()[0].outerHTML;
+            sv += $(
+                '<input type="text" name="simple-value-value">'
+            ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
             sv += '</div>';
             return sv;
         }
@@ -152,6 +158,7 @@ var CollabExtension = {
                 parent_ana_group,
                 new_ve
             );
+            button_element.parent().remove();
         }
     },
     getValuesEvents: function (anaGroup) {

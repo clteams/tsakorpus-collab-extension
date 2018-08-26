@@ -110,6 +110,9 @@ var CollabExtension = {
         else {
             for (var a = 0; a < anaData.length; a ++) {
                 token_dialog_content += CollabExtension.deployAnaGroup(anaData[a], a, true);
+                if (a < anaData.length - 1) {
+                    token_dialog_content += '<br>';
+                }
             }
         }
         token_dialog_content += '<input type="hidden" class="ana-groups-events" value="[]">';

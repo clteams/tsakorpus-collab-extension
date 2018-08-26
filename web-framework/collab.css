@@ -14,5 +14,5 @@
 }
 
 .ana-group, .ana-simple-value, .ana-trackback-value {
-    border: 1px solid black;
+    border: 1px dotted black;
 }

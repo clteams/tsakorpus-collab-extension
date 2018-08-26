@@ -125,6 +125,10 @@ var CollabExtension = {
         if (anaGroup.pos !== null) {
             deployed_ana += CollabExtension.anaGroupAdd.simpleValue("pos", anaGroup.pos, true);
         }
+        // insert trackback-values
+        for (var k = 0; k < anaGroup.trackbacks; k ++) {
+            deployed_ana += CollabExtension.anaGroupAdd.trackbackValue(anaGroup.trackbacks[k], true);
+        }
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         if (!isDefault) {
@@ -135,7 +139,6 @@ var CollabExtension = {
             deployed_ana += '</script>';
         }
         deployed_ana += '</div>';
-        // if not isDefault -> make 'add' diff
         return deployed_ana;
     },
     anaGroupAdd: {
@@ -148,8 +151,21 @@ var CollabExtension = {
             sv += $(
                 '<input type="text" name="simple-value-value">'
             ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
+            // !isDefault
             sv += '</div>';
             return sv;
+        },
+        trackbackValue: function (value, isDefault) {
+            var tv = '<div class="ana-trackback-value">';
+            tv += '<button type="button" onclick="CollabExtensions.anaGroupRemove.trackbackValue(this)">';
+            tv += CollabExtension.message("removeAnaValue") + '</button>';
+            tv += '<label for="trackback-value-value"><p class="trackback-qm">?</p>:</label> ';
+            tv += $(
+                '<input type="text" name="trackback-value-value">'
+            ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
+            // !isDefault
+            tv += '</div>';
+            return tv;
         }
     },
     anaGroupRemove: {

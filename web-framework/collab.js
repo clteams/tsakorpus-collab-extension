@@ -132,6 +132,16 @@ var CollabExtension = {
         for (var k = 0; k < anaGroup.trackbacks.length; k ++) {
             deployed_ana += CollabExtension.anaGroupAdd.trackbackValue(anaGroup.trackbacks[k], true);
         }
+        // insert add-forms
+        deployed_ana += '<button type="button">' + CollabExtension.message("addSimpleValue") + '</button> ';
+        var sv_options = "<select name='simple-values2add'>";
+        var sv_list = ["lex", "parts", "gloss", "pos"];
+        for (var k = 0; k < sv_list.length; k ++) {
+            sv_options += '<option value="' + sv_list[k] + '">' + sv_list[k] + '</option>';
+        }
+        sv_options += "</select>";
+        deployed_ana += sv_options;
+
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         if (!isDefault) {
@@ -311,6 +321,9 @@ var CollabExtension = {
         return CollabExtension.interfaceMessages[messageKey][CollabExtension.interfaceLanguage];
     },
     interfaceMessages: {
+        "addSimpleValue": {
+            "ru": "Добавить"
+        },
         "editDocument": {
             "ru": "Редактирование документа"
         },

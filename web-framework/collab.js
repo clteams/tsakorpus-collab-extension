@@ -174,7 +174,7 @@ var CollabExtension = {
                 '<input type="text" name="simple-value-value">'
             ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
             if (!isDefault) {
-                sv += '<script>var p2=$(this).parent().parent();var ge=CollabExtension.getValuesEvents(p2);';
+                sv += '<script>var p2=$(this).parent();var ge=CollabExtension.getValuesEvents(p2);';
                 sv += 'var av=$.extend({},CollabExtension.diffValue.simpleValue.add);';
                 sv += 'av.key="' + key + '";av.value="' + value.replace('"', '\\"') + '";';
                 sv += 'ge.push(av);CollabExtension.setGroupsEvents(p2,ge);';
@@ -192,7 +192,7 @@ var CollabExtension = {
                 '<input type="text" name="trackback-value-value">'
             ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
             if (!isDefault) {
-                tv += '<script>var p2=$(this).parent().parent();var ge=CollabExtension.getValuesEvents(p2);';
+                tv += '<script>var p2=$(this).parent();var ge=CollabExtension.getValuesEvents(p2);';
                 tv += 'var av=$.extend({},CollabExtension.diffValue.trackbackValue.add);';
                 tv += 'av.to="' + value.replace('"', '\\"') + '";';
                 tv += 'ge.push(av);CollabExtension.setGroupsEvents(p2,ge);';

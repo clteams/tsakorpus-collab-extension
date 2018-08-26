@@ -109,30 +109,37 @@ var CollabExtension = {
         }
         else {
             for (var a = 0; a < anaData.length; a ++) {
-                token_dialog_content += CollabExtension.deployAnaGroup(anaData[a], true);
+                token_dialog_content += CollabExtension.deployAnaGroup(anaData[a], a, true);
             }
         }
         token_dialog_content += '<input type="hidden" class="ana-groups-events" value="[]">';
         token_dialog_content += '</div>';
         return token_dialog_content;
     },
-    deployAnaGroup: function (anaGroup, isDefault) {
+    deployAnaGroup: function (anaGroup, anaIndex, isDefault) {
         var deployed_ana = '<div class="ana-group">';
         // insert simple values
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("lex", anaGroup.lex);
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts);
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("gloss", anaGroup.gloss);
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue(
-            "pos", (anaGroup.pos !== null ? anaGroup.pos : "")
-        );
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("lex", anaGroup.lex, true);
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts, true);
+        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("gloss", anaGroup.gloss, true);
+        if (anaGroup.pos !== null) {
+            deployed_ana += CollabExtension.anaGroupAdd.simpleValue("pos", anaGroup.pos, true);
+        }
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
+        if (!isDefault) {
+            deployed_ana += '<script>var p2=$(this).parent().parent();var ge=CollabExtension.getGroupsEvents(p2);';
+            deployed_ana += 'var ag=$.extend({}, CollabExtension.diffAna.add);';
+            deployed_ana += 'ag.anaIndex=' + anaIndex + ';';
+            deployed_ana += 'ge.push(ag);CollabExtension.setGroupsEvents(p2, ge);';
+            deployed_ana += '</script>';
+        }
         deployed_ana += '</div>';
         // if not isDefault -> make 'add' diff
         return deployed_ana;
     },
     anaGroupAdd: {
-        simpleValue: function (key, value) {
+        simpleValue: function (key, value, isDefault) {
             var sv = '<div class="ana-simple-value">';
             sv += '<button type="button" onclick="CollabExtension.anaGroupRemove.simpleValue(this)">';
             sv += CollabExtension.message("removeAnaValue") + '</button>';

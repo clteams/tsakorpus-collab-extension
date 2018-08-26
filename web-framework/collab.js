@@ -119,6 +119,15 @@ var CollabExtension = {
         token_dialog_content += '</div>';
         return token_dialog_content;
     },
+    insertSimpleValue: function (button) {
+        $(CollabExtension.anaGroupAdd.simpleValue(
+            $(button).parent().find("[name='simple-values2add'] option:selected").val(),
+            $(button).parent().find(".sv2add-value").val(),
+            false
+        )).insertAfter(
+            $(button).parent().find(".ana-simple-value").last()
+        );
+    },
     deployAnaGroup: function (anaGroup, anaIndex, isDefault) {
         var deployed_ana = '<div class="ana-group">';
         // insert simple values
@@ -133,7 +142,8 @@ var CollabExtension = {
             deployed_ana += CollabExtension.anaGroupAdd.trackbackValue(anaGroup.trackbacks[k], true);
         }
         // insert add-forms
-        deployed_ana += '<button type="button">' + CollabExtension.message("addSimpleValue") + '</button> ';
+        deployed_ana += '<button type="button" onclick="CollabExtension.insertSimpleValue(this)">';
+        deployed_ana += CollabExtension.message("addSimpleValue") + '</button> ';
         var sv_options = "<select name='simple-values2add'>";
         var sv_list = ["lex", "parts", "gloss", "pos"];
         for (var k = 0; k < sv_list.length; k ++) {

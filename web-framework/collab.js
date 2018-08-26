@@ -192,7 +192,7 @@ var CollabExtension = {
                 '<input type="text" name="trackback-value-value">'
             ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
             if (!isDefault) {
-                tv += '<script>var p2=$(this).parent();var ge=CollabExtension.getValuesEvents(p2);';
+                tv += '<script>p2=$(this).parent().parent();var ge=CollabExtension.getValuesEvents(p2);';
                 tv += 'var av=$.extend({},CollabExtension.diffValue.trackbackValue.add);';
                 tv += 'av.to="' + value.replace('"', '\\"') + '";';
                 tv += 'ge.push(av);CollabExtension.setGroupsEvents(p2,ge);';

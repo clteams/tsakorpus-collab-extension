@@ -159,7 +159,7 @@ var CollabExtension = {
             var tv = '<div class="ana-trackback-value">';
             tv += '<button type="button" onclick="CollabExtensions.anaGroupRemove.trackbackValue(this)">';
             tv += CollabExtension.message("removeAnaValue") + '</button>';
-            tv += '<label for="trackback-value-value"><p class="trackback-qm">?</p>:</label> ';
+            tv += '<label for="trackback-value-value">?:</label> ';
             tv += $(
                 '<input type="text" name="trackback-value-value">'
             ).attr("value", value).attr("source-value", value).get()[0].outerHTML;

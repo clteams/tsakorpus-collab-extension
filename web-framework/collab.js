@@ -140,8 +140,7 @@ var CollabExtension = {
             sv_options += '<option value="' + sv_list[k] + '">' + sv_list[k] + '</option>';
         }
         sv_options += "</select>";
-        deployed_ana += sv_options;
-
+        deployed_ana += sv_options + ' <input type="text" class="sv2add-value">';
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         if (!isDefault) {

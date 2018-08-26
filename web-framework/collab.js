@@ -126,7 +126,7 @@ var CollabExtension = {
             deployed_ana += CollabExtension.anaGroupAdd.simpleValue("pos", anaGroup.pos, true);
         }
         // insert trackback-values
-        for (var k = 0; k < anaGroup.trackbacks; k ++) {
+        for (var k = 0; k < anaGroup.trackbacks.length; k ++) {
             deployed_ana += CollabExtension.anaGroupAdd.trackbackValue(anaGroup.trackbacks[k], true);
         }
         //

@@ -116,7 +116,8 @@ var CollabExtension = {
             }
         }
         // insert 'add group' button
-        token_dialog_content += '<button type="button" class="insert-ag">' + CollabExtension.message("insertAnaGroup");
+        token_dialog_content += '<button type="button" class="insert-ag" onclick="CollabExtension.insertAnaGroup(this)"';
+        token_dialog_content += '>' + CollabExtension.message("insertAnaGroup");
         token_dialog_content += '</button>';
         token_dialog_content += '<input type="hidden" class="ana-groups-events" value="[]">';
         token_dialog_content += '</div>';

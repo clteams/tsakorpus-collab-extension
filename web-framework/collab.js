@@ -115,6 +115,9 @@ var CollabExtension = {
                 }
             }
         }
+        // insert 'add group' button
+        token_dialog_content += '<button type="button" class="insert-ag">' + CollabExtension.message("insertAnaGroup");
+        token_dialog_content += '</button>';
         token_dialog_content += '<input type="hidden" class="ana-groups-events" value="[]">';
         token_dialog_content += '</div>';
         return token_dialog_content;
@@ -427,6 +430,9 @@ var CollabExtension = {
         },
         "editToken": {
             "ru": "Редактирование токена"
+        },
+        "insertAnaGroup": {
+            "ru": "Добавить разбор"
         },
         "noAnaGroups": {
             "ru": "Для этого токена не указано ни одного разбора"

@@ -259,7 +259,7 @@ var CollabExtension = {
             button_element = $(button_element);
             var parent_ana_group = button_element.parent().parent();
             var new_ve = CollabExtension.getValuesEvents(parent_ana_group);
-            var remove_event = $.extend({}, CollabExtension.diffValue.remove);
+            var remove_event = $.extend({}, CollabExtension.diffValue.trackbackValue.remove);
             remove_event.from = button_element.parent().find("[name='trackback-value-value']").val();
             new_ve.push(remove_event);
             CollabExtension.setValuesEvents(

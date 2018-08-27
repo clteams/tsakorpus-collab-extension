@@ -104,10 +104,25 @@ var CollabExtension = {
     },
     parseTotalToken: function (bid, index) {
         var dlg = $("#token-dialog-id-" + bid + "-" + index);
+        var ana_groups = dlg.find(".ana-group");
         var ag_e = JSON.parse(dlg.find(".ana-groups-events").val());
+        var visited_indices = [];
         for (var k = 0; k < ag_e.length; k ++) {
-            if (ag_e[k].status == "diffAna" && ag_e[k].action != "remove") {
+            if (ag_e[k].status == "diffAna" && ag_e[k].action == "add") {
                 age_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
+                visited_indices.push(age_e[k].anaIndex);
+            }
+        }
+        for (var i = 0; i < ana_groups.length; i ++) {
+            if (visited_indices.indexOf(ana_groups.eq(i).attr("ana-index")) != -1) {
+                continue;
+            }
+            var ag_changes = CollabExtension.parseTotalAnaGroup(dlg, i);
+            if (ag_changes) {
+                var agc = $.extend({}, CollabExtension.diffAna.change);
+                agc.anaIndex = i;
+                agc.anaValues = ag_changes;
+                age_e.push(agc);
             }
         }
         return ag_e;

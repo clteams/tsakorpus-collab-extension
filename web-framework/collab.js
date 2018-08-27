@@ -120,8 +120,24 @@ var CollabExtension = {
         return token_dialog_content;
     },
     insertAnaGroup: function (button) {
-        // ...
-        // re-calculate 'ana-index' for all instances
+        var token_dialog = $(button).parent();
+        token_dialog.find(".ana-group").each(function(index) {
+            $(this).attr("attr-index", index);
+        });
+        var ani = (
+            token_dialog.find(".ana-group").length ?
+            token_dialog.find(".ana-group").last().attr("attr-index") : 0
+        );
+        var ag_object = $(CollabExtension.deployAnaGroup({trackbacks: []}, ani, false));
+        if (token_dialog.find(".ana-group").length) {
+            ag_object.insertAfter(
+                token_dialog.find(".ana-group").last()
+            );
+        } else {
+            ag_object.insertBefore(
+                token_dialog.find(".insert-ag")
+            );
+        }
         $(".ana-group.added").each(function() {
             var p2 = $(this).parent();
             var ge = CollabExtension.getGroupsEvents(p2);
@@ -186,12 +202,14 @@ var CollabExtension = {
         var deployed_ana = '<div class="ana-group' + (!isDefault ? " added" : "") + '"';
         deployed_ana += ' ana-index="' + anaIndex + '">';
         // insert simple values
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("lex", anaGroup.lex, true);
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts, true);
-        deployed_ana += CollabExtension.anaGroupAdd.simpleValue("gloss", anaGroup.gloss, true);
-        if (anaGroup.pos !== null) {
+        if (anaGroup.lex)
+            deployed_ana += CollabExtension.anaGroupAdd.simpleValue("lex", anaGroup.lex, true);
+        if (anaGroup.parts)
+            deployed_ana += CollabExtension.anaGroupAdd.simpleValue("parts", anaGroup.parts, true);
+        if (anaGroup.gloss)
+            deployed_ana += CollabExtension.anaGroupAdd.simpleValue("gloss", anaGroup.gloss, true);
+        if (anaGroup.pos)
             deployed_ana += CollabExtension.anaGroupAdd.simpleValue("pos", anaGroup.pos, true);
-        }
         // insert trackback-values
         for (var k = 0; k < anaGroup.trackbacks.length; k ++) {
             deployed_ana += CollabExtension.anaGroupAdd.trackbackValue(anaGroup.trackbacks[k], true);

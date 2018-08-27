@@ -230,7 +230,7 @@ var CollabExtension = {
         },
         trackbackValue: function (value, isDefault) {
             var tv = '<div class="ana-trackback-value' + (!isDefault ? " added" : "") + '">';
-            tv += '<button type="button" onclick="CollabExtensions.anaGroupRemove.trackbackValue(this)">';
+            tv += '<button type="button" onclick="CollabExtension.anaGroupRemove.trackbackValue(this)">';
             tv += CollabExtension.message("removeAnaValue") + '</button>';
             tv += '<label for="trackback-value-value">?:</label> ';
             tv += $(

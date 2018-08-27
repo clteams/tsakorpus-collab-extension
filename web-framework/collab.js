@@ -121,6 +121,7 @@ var CollabExtension = {
     },
     insertAnaGroup: function (button) {
         // ...
+        // re-calculate 'ana-index' for all instances
         $(".ana-group.added").each(function() {
             var p2 = $(this).parent();
             var ge = CollabExtension.getGroupsEvents(p2);

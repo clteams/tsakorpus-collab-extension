@@ -163,11 +163,11 @@ var CollabExtension = {
             false
         ));
         if ($(button).parent().find(".ana-trackback-value").length) {
-            sv_object.insertAfter(
+            tv_object.insertAfter(
                 $(button).parent().find(".ana-trackback-value").last()
             );
         } else {
-            sv_object.insertBefore(
+            tv_object.insertBefore(
                 $(button).parent().find(".insert-sv")
             );
         }

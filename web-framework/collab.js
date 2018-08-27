@@ -132,13 +132,20 @@ var CollabExtension = {
         $(".ana-group.added").removeClass("added");
     },
     insertSimpleValue: function (button) {
-        $(CollabExtension.anaGroupAdd.simpleValue(
+        var sv_object = $(CollabExtension.anaGroupAdd.simpleValue(
             $(button).parent().find("[name='simple-values2add'] option:selected").val(),
             $(button).parent().find(".sv2add-value").val(),
             false
-        )).insertAfter(
-            $(button).parent().find(".ana-simple-value").last()
-        );
+        ));
+        if ($(button).parent().find(".ana-simple-value").length) {
+            sv_object.insertAfter(
+                $(button).parent().find(".ana-simple-value").last()
+            );
+        } else {
+            sv_object.insertBefore(
+                $(button).parent().find(".insert-sv")
+            );
+        }
         $(".ana-simple-value.added").each(function() {
             var p2 = $(this).parent();
             var ge = CollabExtension.getValuesEvents(p2);
@@ -151,7 +158,19 @@ var CollabExtension = {
         $(".ana-simple-value.added").removeClass("added");
     },
     insertTrackbackValue: function (button) {
-        // ...
+        var tv_object = $(CollabExtension.anaGroupAdd.trackbackValue(
+            $(button).parent().find(".tv2add-value").val(),
+            false
+        ));
+        if ($(button).parent().find(".ana-trackback-value").length) {
+            sv_object.insertAfter(
+                $(button).parent().find(".ana-trackback-value").last()
+            );
+        } else {
+            sv_object.insertBefore(
+                $(button).parent().find(".insert-sv")
+            );
+        }
         $(".ana-trackback-value.added").each(function() {
             var p2 = $(this).parent();
             var ge = CollabExtension.getValuesEvents(p2);
@@ -177,7 +196,7 @@ var CollabExtension = {
             deployed_ana += CollabExtension.anaGroupAdd.trackbackValue(anaGroup.trackbacks[k], true);
         }
         // insert add-forms
-        deployed_ana += '<button type="button" onclick="CollabExtension.insertSimpleValue(this)">';
+        deployed_ana += '<button type="button" class="insert-sv" onclick="CollabExtension.insertSimpleValue(this)">';
         deployed_ana += CollabExtension.message("addSimpleValue") + '</button> ';
         var sv_options = "<select name='simple-values2add'>";
         var sv_list = ["lex", "parts", "gloss", "pos"];
@@ -185,7 +204,11 @@ var CollabExtension = {
             sv_options += '<option value="' + sv_list[k] + '">' + sv_list[k] + '</option>';
         }
         sv_options += "</select>";
-        deployed_ana += sv_options + ' <input type="text" class="sv2add-value">';
+        deployed_ana += sv_options + ' <input type="text" class="sv2add-value"><br>';
+        //
+        deployed_ana += '<button type="button" class="insert-tv" onclick="CollabExtension.insertTrackbackValue(this)">';
+        deployed_ana += CollabExtension.message("addTrackbackValue") + '</button> ';
+        deployed_ana += ' <input type="text" class="tv2add-value">';
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         deployed_ana += '</div>';
@@ -375,6 +398,9 @@ var CollabExtension = {
     interfaceMessages: {
         "addSimpleValue": {
             "ru": "Добавить"
+        },
+        "addTrackbackValue": {
+            "ru": "Добавить другое"
         },
         "editDocument": {
             "ru": "Редактирование документа"

@@ -266,6 +266,7 @@ var CollabExtension = {
                 parent_ana_group,
                 new_ve
             );
+            button_element.parent().remove();
         }
     },
     getValuesEvents: function (anaGroup) {

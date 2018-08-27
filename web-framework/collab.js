@@ -91,13 +91,16 @@ var CollabExtension = {
     submitTokenDiff: function (bid, index) {
         // diffAna.add with anaValues=[]
         if (!CollabExtension.diffsOnStructures[bid]) {
-            CollabExtension.diffsOnStructures[bid] = $.extend({}, CollabExtension.initialStructures[bid]);
-            for (var k = 0; k < CollabExtension.diffsOnStructures[bid].length; k ++) {
-                delete CollabExtension.diffsOnStructures[bid][k].anaData;
-                CollabExtension.diffsOnStructures[bid][k].diff = [];
+            CollabExtension.diffsOnStructures[bid] = [];
+            for (var k = 0; k < CollabExtension.initialStructures[bid].length; k ++) {
+                CollabExtension.diffsOnStructures[bid].push({
+                    token: null,
+                    diff: null
+                });
+                CollabExtension.diffsOnStructures[bid][k].token = CollabExtension.initialStructures[bid][k].token;
             }
         }
-        CollabExtension.diffsOnStructures[bid][k].diff = CollabExtension.parseTotalToken(bid, index);
+        CollabExtension.diffsOnStructures[bid][index].diff = CollabExtension.parseTotalToken(bid, index);
     },
     parseTotalToken: function (bid, index) {
         var dlg = $("#token-dialog-id-" + bid + "-" + index);
@@ -107,6 +110,7 @@ var CollabExtension = {
                 age_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
             }
         }
+        return ag_e;
     },
     parseTotalAnaGroup: function (dialog, index, isDefault) {
         var ana_group = dialog.find(".ana-group[ana-index=" + index + "]");

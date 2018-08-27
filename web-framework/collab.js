@@ -119,6 +119,18 @@ var CollabExtension = {
         token_dialog_content += '</div>';
         return token_dialog_content;
     },
+    insertAnaGroup: function (button) {
+        // ...
+        $(".ana-group.added").each(function() {
+            var p2 = $(this).parent();
+            var ge = CollabExtension.getGroupsEvents(p2);
+            var ag = $.extend({}, CollabExtension.diffAna.add);
+            ag.anaIndex = $(this).attr("ana-index");
+            ge.push(ag);
+            CollabExtension.setGroupsEvents(p2, ge);
+        })
+        $(".ana-group.added").removeClass("added");
+    },
     insertSimpleValue: function (button) {
         $(CollabExtension.anaGroupAdd.simpleValue(
             $(button).parent().find("[name='simple-values2add'] option:selected").val(),
@@ -127,6 +139,28 @@ var CollabExtension = {
         )).insertAfter(
             $(button).parent().find(".ana-simple-value").last()
         );
+        $(".ana-simple-value.added").each(function() {
+            var p2 = $(this).parent();
+            var ge = CollabExtension.getValuesEvents(p2);
+            var av = $.extend({}, CollabExtension.diffValue.simpleValue.add);
+            av.key = $(this).find("simple-value-key").attr("key");
+            av.value = $(this).find("[name='simple-value-value']").val();
+            ge.push(av);
+            CollabExtension.setValuesEvents(p2, ge);
+        });
+        $(".ana-simple-value.added").removeClass("added");
+    },
+    insertTrackbackValue: function (button) {
+        // ...
+        $(".ana-trackback-value.added").each(function() {
+            var p2 = $(this).parent();
+            var ge = CollabExtension.getValuesEvents(p2);
+            var av = $.extend({}, CollabExtension.diffValue.trackbackValue.add);
+            av.to = $(this).find("[name='trackback-value-value']").val();
+            ge.push(av);
+            CollabExtension.setValuesEvents(p2, ge);
+        });
+        $(".ana-trackback-value.added").removeClass("added");
     },
     deployAnaGroup: function (anaGroup, anaIndex, isDefault) {
         var deployed_ana = '<div class="ana-group' + (!isDefault ? " added" : "") + '"';
@@ -154,17 +188,6 @@ var CollabExtension = {
         deployed_ana += sv_options + ' <input type="text" class="sv2add-value">';
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
-        if (!isDefault) {
-            $(".ana-group.added").each(function() {
-                var p2 = $(this).parent();
-                var ge = CollabExtension.getGroupsEvents(p2);
-                var ag = $.extend({}, CollabExtension.diffAna.add);
-                ag.anaIndex = $(this).attr("ana-index");
-                ge.push(ag);
-                CollabExtension.setGroupsEvents(p2, ge);
-            })
-            $(".ana-group.added").removeClass("added");
-        }
         deployed_ana += '</div>';
         return deployed_ana;
     },
@@ -178,18 +201,6 @@ var CollabExtension = {
             sv += $(
                 '<input type="text" name="simple-value-value">'
             ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
-            if (!isDefault) {
-                $(".ana-simple-value.added").each(function() {
-                    var p2 = $(this).parent();
-                    var ge = CollabExtension.getValuesEvents(p2);
-                    var av = $.extend({}, CollabExtension.diffValue.simpleValue.add);
-                    av.key = $(this).find("simple-value-key").attr("key");
-                    av.value = $(this).find("[name='simple-value']").val();
-                    ge.push(av);
-                    CollabExtension.setValuesEvents(p2, ge);
-                });
-                $(".ana-simple-value.added").removeClass("added");
-            }
             sv += '</div>';
             return sv;
         },
@@ -201,17 +212,6 @@ var CollabExtension = {
             tv += $(
                 '<input type="text" name="trackback-value-value">'
             ).attr("value", value).attr("source-value", value).get()[0].outerHTML;
-            if (!isDefault) {
-                $(".ana-trackback-value.added").each(function() {
-                    var p2 = $(this).parent();
-                    var ge = CollabExtension.getValuesEvents(p2);
-                    var av = $.extend({}, CollabExtension.diffValue.trackbackValue.add);
-                    av.to = $(this).find("[name='trackback-value-value']").val();
-                    ge.push(av);
-                    CollabExtension.setValuesEvents(p2, ge);
-                });
-                $(".ana-trackback-value.added").removeClass("added");
-            }
             tv += '</div>';
             return tv;
         }

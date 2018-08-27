@@ -73,10 +73,9 @@ var CollabExtension = {
         CollabExtension.submitFunctions[bid] = function () {
             CollabExtension.submitDiffOn(bid);
         };
-        var buttons = {
-            Cancel: function() {
-                CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
-            }
+        var buttons = {};
+        buttons[CollabExtension.message("cancelAction")] = function () {
+            CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
         };
         buttons[CollabExtension.message("submitEdits")] = CollabExtension.submitFunctions[bid];
         CollabExtension.buttonDialogs[bid].commonDialog = $("#" + common_dialog_id).dialog({

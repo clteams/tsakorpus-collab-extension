@@ -56,7 +56,7 @@ var CollabExtension = {
             var buttons = {};
             buttons[CollabExtension.message("cancelAction")] = (function (k_) {
                 return function () {
-                    CollabExtension.buttonDialogs[bid].tokenDialogs[k_].dialog("close")l
+                    CollabExtension.buttonDialogs[bid].tokenDialogs[k_].dialog("close");
                 }
             })(k);
             buttons[CollabExtension.message("submitTokenDiff")] = CollabExtension.diffSubmitters[token_dialog_id];

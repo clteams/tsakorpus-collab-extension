@@ -126,7 +126,7 @@ var CollabExtension = {
     insertAnaGroup: function (button) {
         var token_dialog = $(button).parent();
         token_dialog.find(".ana-group").each(function(index) {
-            $(this).attr("attr-index", index);
+            $(this).attr("ana-index", index);
         });
         var ani = (
             token_dialog.find(".ana-group").length ?

@@ -53,11 +53,12 @@ var CollabExtension = {
                     CollabExtension.submitTokenDiff(bid, k_);
                 }
             })(k);
-            var buttons = {
-                Cancel: function() {
-                    CollabExtension.buttonDialogs[bid].tokenDialogs[k].dialog("close");
+            var buttons = {};
+            buttons[CollabExtension.message("cancelAction")] = (function (k_) {
+                return function () {
+                    CollabExtension.buttonDialogs[bid].tokenDialogs[k_].dialog("close")l
                 }
-            };
+            })(k);
             buttons[CollabExtension.message("submitTokenDiff")] = CollabExtension.diffSubmitters[token_dialog_id];
             CollabExtension.buttonDialogs[bid].tokenDialogs.push(
             $("#" + token_dialog_id).dialog({
@@ -427,6 +428,9 @@ var CollabExtension = {
         },
         "addTrackbackValue": {
             "ru": "Добавить другое"
+        },
+        "cancelAction": {
+            "ru": "Отмена"
         },
         "editDocument": {
             "ru": "Редактирование документа"

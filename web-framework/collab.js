@@ -48,9 +48,11 @@ var CollabExtension = {
         el.parent().append(common_dialog_content);
         for (var k = 0; k < el_is.length; k ++) {
             var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
-            CollabExtension.diffSubmitters[token_dialog_id] = function () {
-                CollabExtension.submitTokenDiff(bid, k);
-            };
+            CollabExtension.diffSubmitters[token_dialog_id] = (function (k_) {
+                return function () {
+                    CollabExtension.submitTokenDiff(bid, k_);
+                }
+            })(k);
             var buttons = {
                 Cancel: function() {
                     CollabExtension.buttonDialogs[bid].tokenDialogs[k].dialog("close");

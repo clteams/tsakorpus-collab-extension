@@ -100,7 +100,7 @@ var CollabExtension = {
         CollabExtension.diffsOnStructures[bid][k].diff = CollabExtension.parseTotalToken(bid, index);
     },
     parseTotalToken: function (bid, index) {
-        var dlg = $("#token-dialog-id-a67b9ae977-2");
+        var dlg = $("#token-dialog-id-" + bid + "-" + index);
         var ag_e = JSON.parse(dlg.find(".ana-groups-events").val());
         for (var k = 0; k < ag_e.length; k ++) {
             if (ag_e[k].status == "diffAna" && ag_e[k].action != "remove") {

@@ -90,7 +90,49 @@ var CollabExtension = {
     },
     submitTokenDiff: function (bid, index) {
         // diffAna.add with anaValues=[]
-        console.log(bid, index);
+        if (!CollabExtension.diffsOnStructures[bid]) {
+            CollabExtension.diffsOnStructures[bid] = $.extend({}, CollabExtension.initialStructures[bid]);
+            for (var k = 0; k < CollabExtension.diffsOnStructures[bid].length; k ++) {
+                delete CollabExtension.diffsOnStructures[bid][k].anaData;
+                CollabExtension.diffsOnStructures[bid][k].diff = [];
+            }
+        }
+        CollabExtension.diffsOnStructures[bid][k].diff = CollabExtension.parseTotalToken(bid, index);
+    },
+    parseTotalToken: function (bid, index) {
+        var dlg = $("#token-dialog-id-a67b9ae977-2");
+        var ag_e = JSON.parse(dlg.find(".ana-groups-events").val());
+        for (var k = 0; k < ag_e.length; k ++) {
+            if (ag_e[k].status == "diffAna" && ag_e[k].action != "remove") {
+                age_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
+            }
+        }
+    },
+    parseTotalAnaGroup: function (dialog, index, isDefault) {
+        var ana_group = dialog.find(".ana-group[ana-index=" + index + "]");
+        var av_events = JSON.parse(ana_group.find(".ana-values-events").val());
+        var simple_values = dialog.find(".ana-simple-value");
+        var trackback_values = dialog.find(".ana-trackback-value");
+        for (var a = 0; a < simple_values.length; a ++) {
+            var val = simple_values.eq(a).find("[name='simple-value-value']");
+            if (val.attr("source-value") != val.val() || !isDefault) {
+                var sv_change = $.extend({}, CollabExtension.diffValue.simpleValue.add);
+                sv_change.key = simple_values.eq(a).find("simple-value-key").attr("key");
+                sv_change.from = val.attr("source-value");
+                sv_change.to = val.val();
+                av_events.push(sv_change);
+            }
+        }
+        for (var b = 0; b < trackback_values.length; b ++) {
+            var val = trackback_values.eq(b).find("[name='trackback-value-value']");
+            if (val.attr("source-value") != val.val()) {
+                var tv_change = $.extend({}, CollabExtension.diffValue.trackbackValue.change);
+                tv_change.from = val.attr("source-value");
+                tv_change.to = val.val();
+                av_events.push(tv_change);
+            }
+        }
+        return av_events;
     },
     createEditButtonID: function () {
         return CollabExtension.createRandomID()

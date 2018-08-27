@@ -209,7 +209,7 @@ var CollabExtension = {
                     av.to = $(this).find("[name='trackback-value-value']").val();
                     ge.push(av);
                     CollabExtension.setValuesEvents(p2, ge);
-                }
+                });
                 $(".ana-trackback-value.added").removeClass("added");
             }
             tv += '</div>';

@@ -51,6 +51,7 @@ var CollabExtension = {
             CollabExtension.diffSubmitters[token_dialog_id] = (function (k_) {
                 return function () {
                     CollabExtension.submitTokenDiff(bid, k_);
+                    CollabExtension.buttonDialogs[bid].tokenDialogs[k_].dialog("close");
                 }
             })(k);
             var buttons = {};
@@ -76,7 +77,7 @@ var CollabExtension = {
         };
         buttons[CollabExtension.message("submitEdits")] = function () {
             CollabExtension.submitDiffOn(bid);
-            CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
+            //CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
         };
         CollabExtension.buttonDialogs[bid].commonDialog = $("#" + common_dialog_id).dialog({
             autoOpen: false,

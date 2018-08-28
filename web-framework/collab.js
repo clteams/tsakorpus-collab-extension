@@ -70,14 +70,14 @@ var CollabExtension = {
                 close: function() {}
             }));
         }
-        CollabExtension.submitFunctions[bid] = function () {
-            CollabExtension.submitDiffOn(bid);
-        };
         var buttons = {};
         buttons[CollabExtension.message("cancelAction")] = function () {
             CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
         };
-        buttons[CollabExtension.message("submitEdits")] = CollabExtension.submitFunctions[bid];
+        buttons[CollabExtension.message("submitEdits")] = function () {
+            CollabExtension.submitDiffOn(bid);
+            CollabExtension.buttonDialogs[bid].commonDialog.dialog("close");
+        };
         CollabExtension.buttonDialogs[bid].commonDialog = $("#" + common_dialog_id).dialog({
             autoOpen: false,
             height: 300,
@@ -371,7 +371,6 @@ var CollabExtension = {
     wfDiffSequences: {},
     buttonDialogs: {},
     diffsOnStructures: {},
-    submitFunctions: {},
     diffSubmitters: {},
     makeInitialStructure: function (sent_lang_obj) {
         var slo = sent_lang_obj;

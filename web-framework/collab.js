@@ -134,6 +134,7 @@ var CollabExtension = {
         var trackback_values = dialog.find(".ana-trackback-value");
         for (var a = 0; a < simple_values.length; a ++) {
             var val = simple_values.eq(a).find("[name='simple-value-value']");
+            console.log(val.val());
             if (val.attr("source-value") != val.val() || !isDefault) {
                 var sv_change = $.extend({}, CollabExtension.diffValue.simpleValue.add);
                 sv_change.key = simple_values.eq(a).find("simple-value-key").attr("key");

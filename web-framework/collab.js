@@ -109,7 +109,7 @@ var CollabExtension = {
         var visited_indices = [];
         for (var k = 0; k < ag_e.length; k ++) {
             if (ag_e[k].status == "diffAna" && ag_e[k].action == "add") {
-                ag_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
+                ag_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k, false);
                 visited_indices.push(ag_e[k].anaIndex);
             }
         }
@@ -117,7 +117,7 @@ var CollabExtension = {
             if (visited_indices.indexOf(ana_groups.eq(i).attr("ana-index")) != -1) {
                 continue;
             }
-            var ag_changes = CollabExtension.parseTotalAnaGroup(dlg, i);
+            var ag_changes = CollabExtension.parseTotalAnaGroup(dlg, i, true);
             if (ag_changes) {
                 var agc = $.extend({}, CollabExtension.diffAna.change);
                 agc.anaIndex = i;

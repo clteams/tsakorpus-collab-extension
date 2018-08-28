@@ -109,7 +109,7 @@ var CollabExtension = {
         var visited_indices = [];
         for (var k = 0; k < ag_e.length; k ++) {
             if (ag_e[k].status == "diffAna" && ag_e[k].action == "add") {
-                ag_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
+                ag_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, ag_e[k].anaIndex);
                 visited_indices.push(ag_e[k].anaIndex);
             }
         }
@@ -209,7 +209,7 @@ var CollabExtension = {
             var p2 = $(this).parent();
             var ge = CollabExtension.getGroupsEvents(p2);
             var ag = $.extend({}, CollabExtension.diffAna.add);
-            ag.anaIndex = $(this).attr("ana-index");
+            ag.anaIndex = Number($(this).attr("ana-index"));
             ge.push(ag);
             CollabExtension.setGroupsEvents(p2, ge);
         })

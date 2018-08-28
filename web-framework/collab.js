@@ -101,6 +101,7 @@ var CollabExtension = {
             }
         }
         CollabExtension.diffsOnStructures[bid][index].diff = CollabExtension.parseTotalToken(bid, index);
+        $("[onclick=\"CollabExtension.callTokenDialog('" + bid + "', " + index + ")\"]").addClass("submitted");
     },
     parseTotalToken: function (bid, index) {
         var dlg = $("#token-dialog-id-" + bid + "-" + index);

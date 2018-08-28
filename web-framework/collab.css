@@ -8,6 +8,10 @@
     text-decoration: underline !important;
 }
 
+.edit-dialog-token.submitted {
+    color: #50c878 !important;
+}
+
 .token-sequence-wrapper {
     width: 770px !important;
     word-wrap: break-word !important;

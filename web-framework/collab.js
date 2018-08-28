@@ -122,7 +122,7 @@ var CollabExtension = {
                 var agc = $.extend({}, CollabExtension.diffAna.change);
                 agc.anaIndex = i;
                 agc.anaValues = ag_changes;
-                age_e.push(agc);
+                ag_e.push(agc);
             }
         }
         return ag_e;

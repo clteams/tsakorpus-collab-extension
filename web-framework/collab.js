@@ -114,7 +114,7 @@ var CollabExtension = {
             }
         }
         for (var i = 0; i < ana_groups.length; i ++) {
-            if (visited_indices.indexOf(ana_groups.eq(i).attr("ana-index")) != -1) {
+            if (visited_indices.indexOf(Number(ana_groups.eq(i).attr("ana-index"))) != -1) {
                 continue;
             }
             var ag_changes = CollabExtension.parseTotalAnaGroup(dlg, i);

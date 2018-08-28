@@ -193,7 +193,7 @@ var CollabExtension = {
         });
         var ani = (
             token_dialog.find(".ana-group").length ?
-            token_dialog.find(".ana-group").last().attr("attr-index") : 0
+            token_dialog.find(".ana-group").length : 0
         );
         var ag_object = $(CollabExtension.deployAnaGroup({trackbacks: []}, ani, false));
         if (token_dialog.find(".ana-group").length) {

@@ -130,8 +130,8 @@ var CollabExtension = {
     parseTotalAnaGroup: function (dialog, index) {
         var ana_group = dialog.find(".ana-group[ana-index=" + index + "]");
         var av_events = JSON.parse(ana_group.find(".ana-values-events").val());
-        var simple_values = dialog.find(".ana-simple-value");
-        var trackback_values = dialog.find(".ana-trackback-value");
+        var simple_values = ana_group.find(".ana-simple-value");
+        var trackback_values = ana_group.find(".ana-trackback-value");
         for (var a = 0; a < simple_values.length; a ++) {
             var val = simple_values.eq(a).find("[name='simple-value-value']");
             if (val.attr("source-value") != val.val()) {

@@ -109,7 +109,7 @@ var CollabExtension = {
         var visited_indices = [];
         for (var k = 0; k < ag_e.length; k ++) {
             if (ag_e[k].status == "diffAna" && ag_e[k].action == "add") {
-                ag_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k, false);
+                ag_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
                 visited_indices.push(ag_e[k].anaIndex);
             }
         }
@@ -117,7 +117,7 @@ var CollabExtension = {
             if (visited_indices.indexOf(ana_groups.eq(i).attr("ana-index")) != -1) {
                 continue;
             }
-            var ag_changes = CollabExtension.parseTotalAnaGroup(dlg, i, true);
+            var ag_changes = CollabExtension.parseTotalAnaGroup(dlg, i);
             if (ag_changes) {
                 var agc = $.extend({}, CollabExtension.diffAna.change);
                 agc.anaIndex = i;
@@ -127,16 +127,15 @@ var CollabExtension = {
         }
         return ag_e;
     },
-    parseTotalAnaGroup: function (dialog, index, isDefault) {
+    parseTotalAnaGroup: function (dialog, index) {
         var ana_group = dialog.find(".ana-group[ana-index=" + index + "]");
         var av_events = JSON.parse(ana_group.find(".ana-values-events").val());
         var simple_values = dialog.find(".ana-simple-value");
         var trackback_values = dialog.find(".ana-trackback-value");
         for (var a = 0; a < simple_values.length; a ++) {
             var val = simple_values.eq(a).find("[name='simple-value-value']");
-            console.log(val.val());
-            if (val.attr("source-value") != val.val() || !isDefault) {
-                var sv_change = $.extend({}, CollabExtension.diffValue.simpleValue.add);
+            if (val.attr("source-value") != val.val()) {
+                var sv_change = $.extend({}, CollabExtension.diffValue.simpleValue.change);
                 sv_change.key = simple_values.eq(a).find("simple-value-key").attr("key");
                 sv_change.from = val.attr("source-value");
                 sv_change.to = val.val();

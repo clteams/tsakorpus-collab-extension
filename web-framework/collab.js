@@ -41,7 +41,9 @@ var CollabExtension = {
         // Create token dialogs
         for (var k = 0; k < el_is.length; k ++) {
             var token_dialog_id = "token-dialog-id-" + bid + "-" + k.toString();
-            common_dialog_content += CollabExtension.createTokenDialog(token_dialog_id, el_is[k].anaData);
+            common_dialog_content += CollabExtension.createTokenDialog(
+                token_dialog_id, el_is[k].anaData, el_is[k].token
+            );
         }
         //
         common_dialog_content += '</div>';
@@ -166,9 +168,9 @@ var CollabExtension = {
         }
         return button_id;
     },
-    createTokenDialog: function (tokenDialogID, anaData) {
+    createTokenDialog: function (tokenDialogID, anaData, tokenString) {
         var token_dialog_content = '<div id="' + tokenDialogID + '" title="' + CollabExtension.message("editToken");
-        token_dialog_content += '">';
+        token_dialog_content += ': ' + tokenString + '">';
         if (!anaData) {
             token_dialog_content += '<div class="no-ana-groups">' + CollabExtension.message("noAnaGroups") + '</div>';
         }

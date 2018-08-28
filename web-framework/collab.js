@@ -109,8 +109,8 @@ var CollabExtension = {
         var visited_indices = [];
         for (var k = 0; k < ag_e.length; k ++) {
             if (ag_e[k].status == "diffAna" && ag_e[k].action == "add") {
-                age_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
-                visited_indices.push(age_e[k].anaIndex);
+                ag_e[k].anaValues = CollabExtension.parseTotalAnaGroup(dlg, k);
+                visited_indices.push(ag_e[k].anaIndex);
             }
         }
         for (var i = 0; i < ana_groups.length; i ++) {

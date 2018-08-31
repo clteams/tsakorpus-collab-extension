@@ -5,6 +5,8 @@ import random
 import string
 import sqlite3
 
+collab_path = "./web_app/collab"
+
 
 class CollabInstance:
     def __init__(self, auth_token=None):
@@ -28,9 +30,7 @@ class FileSequenceFraming:
         frame = []
         for in_sentence, sentence in enumerate(self.file_json["sentences"]):
             for wf_index, wf in enumerate(sentence["words"]):
-                if wf
-
-
+                ...
 
 
 class SequenceDiff:
@@ -132,8 +132,8 @@ class TokenAnaDiff:
 
 
 class AuthenticationAgent:
-    def __init__(self):
-        self.auth_db = sqlite3.connect("authentication.sqlite3")
+    def __init__(self, path):
+        self.auth_db = sqlite3.connect(path + "/authentication.sqlite3")
         self.auth_cursor = self.auth_db.cursor()
         """create table credentials(login text, password text, rights text, token text)"""
 

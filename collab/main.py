@@ -151,6 +151,9 @@ class AuthenticationAgent:
         except sqlite3.OperationalError:
             raise ValueError()
 
+        except TypeError:
+            raise ValueError()
+
     def check_token(self, token):
         try:
             username, = self.auth_cursor.execute("select login from credentials where token=?", (token,)).fetchone()

@@ -1,11 +1,10 @@
 #!/usr/bin/python3
+from flask import request, jsonify
 import json
 from .main import *
 
 
-def make_routes():
-    global app, request, jsonify
-
+def make_routes(app):
     @app.route("/collab/authorize.json")
     def collab_authorize():
         if not request.args:

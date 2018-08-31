@@ -139,10 +139,10 @@ class AuthenticationAgent:
 
     def authorize(self, login, password):
         try:
-            pw, = self.auth_cursor.execute("select password from credentials where user=?", (login,)).fetchone()
+            pw, = self.auth_cursor.execute("select password from credentials where login=?", (login,)).fetchone()
             if password == pw:
                 new_token = ''.join(random.choice("1234567890abcdef") for _ in range(20))
-                self.auth_cursor.execute("update credentials set token=? where user=?", (new_token, login,))
+                self.auth_cursor.execute("update credentials set token=? where login=?", (new_token, login,))
                 self.auth_db.commit()
                 return {"token": new_token}
             else:

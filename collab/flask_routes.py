@@ -17,7 +17,7 @@ def make_routes(app):
             if "login" in request.args and "pwd" in request.args:
                 agent = AuthenticationAgent(collab_path)
                 try:
-                    token = agent.authorize(request.args["login"], request.args["password"])
+                    token = agent.authorize(request.args["login"], request.args["pwd"])
                     return jsonify({
                         "status": 200,
                         "login": request.args["login"],

@@ -146,20 +146,20 @@ class AuthenticationAgent:
                 self.auth_db.commit()
                 return {"token": new_token}
             else:
-                raise ValueError()
+                raise ValueError("Incorrect password entered")
 
         except sqlite3.OperationalError:
-            raise ValueError()
+            raise ValueError("Unknown DB error occured")
 
         except TypeError:
-            raise ValueError()
+            raise ValueError("No such user found in the database")
 
     def check_token(self, token):
         try:
             username, = self.auth_cursor.execute("select login from credentials where token=?", (token,)).fetchone()
             return {"user": username}
         except sqlite3.OperationalError:
-            raise ValueError()
+            raise ValueError("Unknown DB error occured")
 
     def stop(self):
         self.auth_db.commit()

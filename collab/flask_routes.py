@@ -23,11 +23,11 @@ def make_routes(app):
                         "login": request.args["login"],
                         "token": token["token"]
                     })
-                except ValueError:
+                except ValueError as ve:
                     return jsonify({
                         "status": "error",
                         "code": "incorrect-data",
-                        "message": "Login/password is incorrect"
+                        "message": str(ve)
                     })
             else:
                 return jsonify({

@@ -148,8 +148,8 @@ class AuthenticationAgent:
             else:
                 raise ValueError("Incorrect password entered")
 
-        except sqlite3.OperationalError:
-            raise ValueError("Unknown DB error occured")
+        except sqlite3.OperationalError as sqe:
+            raise ValueError("Unknown DB error occured: " + str(sqe))
 
         except TypeError:
             raise ValueError("No such user found in the database")

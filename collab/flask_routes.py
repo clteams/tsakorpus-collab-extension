@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-from flask import request, jsonify
+from flask import redirect, request, jsonify
+import datetime
 import json
 from .main import *
 
@@ -18,12 +19,14 @@ def make_routes(app):
                 agent = AuthenticationAgent(collab_path)
                 try:
                     token = agent.authorize(request.args["login"], request.args["pwd"])
-                    return jsonify({
-                        "status": 200,
-                        "login": request.args["login"],
-                        "token": token["token"]
-                    })
+                    agent.stop()
+                    resp = app.make_response(redirect('/'))
+                    expire_date = datetime.datetime.now()
+                    expire_date = expire_date + datetime.timedelta(days=90)
+                    resp.set_cookie("user_token", token, expires=expire_date)
+                    return resp
                 except ValueError as ve:
+                    agent.stop()
                     return jsonify({
                         "status": "error",
                         "code": "incorrect-data",

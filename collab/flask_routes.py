@@ -23,7 +23,7 @@ def make_routes(app):
                     resp = app.make_response(redirect('/'))
                     expire_date = datetime.datetime.now()
                     expire_date = expire_date + datetime.timedelta(days=90)
-                    resp.set_cookie("user_token", token, expires=expire_date)
+                    resp.set_cookie("user_token", token["token"], expires=expire_date)
                     return resp
                 except ValueError as ve:
                     agent.stop()

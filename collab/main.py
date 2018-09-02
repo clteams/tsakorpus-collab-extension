@@ -70,9 +70,10 @@ class HistoryAgent:
 class EditAgent:
     def __init__(self, diff_json, agent_json, corpus_name):
         self.corpus_path = "../corpus/%s/" % corpus_name
-        self.diff_json = diff_json
+        self.diff_json_sequence = diff_json
         self.file_name = agent_json["file_name"]
         self.pairs = agent_json["pairs"]
+        self.document_file_json = json.loads(open(self.corpus_path + "/" + self.file_name).read())
 
     def rewrite_pairs(self):
         for j, pair in enumerate(self.pairs):
@@ -102,6 +103,12 @@ class EditAgent:
         return None
 
     def edit_ana(self, ana_json, ana_diff):
+        gpc = [
+            va for va in ana_diff if
+            va["status"] == "simpleValue" and va["action"] == "change" and "key" in va
+            and va["key"] in ["parts", "gloss"]
+        ]
+        gpc = sorted(gpc, key=lambda x: x["key"])
         for value_action in ana_diff:
 
             if value_action["action"] == "add":
@@ -133,6 +140,13 @@ class EditAgent:
                         ana_json["gr.pos"] = value_action["to"]
                     else:
                         ana_json[value_action["key"]] = value_action["to"]
+                    if value_action["key"] == "gloss" and len(gpc) == 2:
+                        pd_split = gpc[1]["to"].split("-")
+                        gd_split = gpc[0]["to"].split("-")
+                        if len(pd_split) == len(gd_split):
+                            ana_json["gloss_index"] = "-".join([
+                                "%s{%s}" % (pd_split[i], gd_split[i],) for i in range(len(pd_split))
+                            ]) + "-"
                 elif value_action["status"] == "trackbackValue":
                     for (k, v) in ana_json.items():
                         if v == value_action["from"]:

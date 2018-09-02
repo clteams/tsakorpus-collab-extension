@@ -50,6 +50,21 @@ class FileSequenceFraming:
         return True
 
 
+class HistoryAgent:
+    def __init__(self, path):
+        self.history_db = sqlite3.connect(path + "/history.sqlite3")
+        self.history_cursor = self.history_db.cursor()
+        """create table diff_history(diff_id text, by_user text, diff_content text, agent_content text)"""
+
+    def add_diff(self, diff_id, by_user, diff_json, agent_json):
+        self.history_cursor.execute(
+            "insert into diff_history values (?, ?, ?, ?)",
+            (diff_id, by_user, json.dumps(diff_json), json.dumps(agent_json),)
+        )
+
+    def stop(self):
+        self.history_db.commit()
+        self.history_db.close()
 
 
 class EditAgent:

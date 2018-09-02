@@ -17,20 +17,33 @@ class CollabInstance:
 
 
 class FileSequenceFraming:
-    def __init__(self, corpus_name, file_name, focus_sequence):
+    def __init__(self, corpus_name, file_name, token_list):
         self.corpus_name = corpus_name
         self.file_name = file_name
-        self.focus_sequence = focus_sequence
+        self.token_list = token_list
         self.file_path = "../corpus/%s/%s.json" % (self.corpus_name, self.file_name,)
         self.file_json = json.loads(open(self.file_path).read())
+        self.sentences = self.file_json["sentences"]
+        self.token_index = 0
+        self.found_pairs = []
+        for n, sentence in enumerate(self.sentences):
+            self.find_in_sentence(n)
+            if self.token_index == len(self.token_list) - 1:
+                break
 
-    def extract_frame(self):
-        punct = [p for p in string.punctuation]
-        tokenized_fs = self.focus_sequence.split()
-        frame = []
-        for in_sentence, sentence in enumerate(self.file_json["sentences"]):
-            for wf_index, wf in enumerate(sentence["words"]):
-                ...
+    def find_in_sentence(self, sentence_index):
+        words = self.file_json["sentences"][sentence_index]["words"]
+        for j, word in enumerate(words):
+            if word["wtype"] != "word":
+                continue
+            if self.token_index == len(self.token_list) - 1:
+                break
+            if word["wf"] == self.token_list[self.token_index]:
+                self.token_index += 1
+                self.found_pairs.append([sentence_index, j])
+            else:
+                return False
+        return True
 
 
 class SequenceDiff:

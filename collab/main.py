@@ -175,7 +175,7 @@ class SequenceDiff:
     def summarize_diff(self, parent_diff_id):
         diff_data = {
             "parent_diff": parent_diff_id,
-            "current_diff": "".join(random.choice("1234567890abcdef") for _ in range(20)),
+            "current_diff": random_hex(),
             "diff_sequence": self.index_based_diff
         }
         return diff_data
@@ -243,7 +243,7 @@ class AuthenticationAgent:
         try:
             pw, = self.auth_cursor.execute("select password from credentials where login=?", (login,)).fetchone()
             if password == pw:
-                new_token = ''.join(random.choice("1234567890abcdef") for _ in range(20))
+                new_token = random_hex()
                 self.auth_cursor.execute("update credentials set token=? where login=?", (new_token, login,))
                 self.auth_db.commit()
                 return {"token": new_token}

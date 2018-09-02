@@ -75,7 +75,12 @@ class EditAgent:
         self.pairs = agent_json["pairs"]
 
     def rewrite_pairs(self):
-        ...
+        for j, pair in enumerate(self.pairs):
+            si, wi = pair
+            self.document_file_json["sentences"][si]["words"][wi] = self.edit_sector(
+                self.document_file_json["sentences"][si]["words"][wi],
+                self.diff_json_sequence[j]
+            )
 
     def edit_sector(self, paj, diff):
         for diff_ana in diff:
@@ -91,6 +96,7 @@ class EditAgent:
                 paj["ana"][diff_ana["anaIndex"]] = self.edit_ana(
                     paj["ana"][diff_ana["anaIndex"]], diff_ana["anaValues"]
                 )
+        return paj
 
     def get_trackback_key(self, value):
         return None

@@ -8,6 +8,10 @@ import sqlite3
 collab_path = "./web_app/collab"
 
 
+def random_hex(length=30):
+    return ''.join(random.choice("1234567890abcdef") for _ in range(length))
+
+
 class CollabInstance:
     def __init__(self, auth_token=None):
         self.auth_token = auth_token
@@ -44,6 +48,76 @@ class FileSequenceFraming:
             else:
                 return False
         return True
+
+
+
+
+class EditAgent:
+    def __init__(self, diff_json, agent_json, corpus_name):
+        self.corpus_path = "../corpus/%s/" % corpus_name
+        self.diff_json = diff_json
+        self.file_name = agent_json["file_name"]
+        self.pairs = agent_json["pairs"]
+
+    def rewrite_pairs(self):
+        ...
+
+    def edit_sector(self, paj, diff):
+        for diff_ana in diff:
+            if diff_ana["action"] == "add":
+                new_ana = self.edit_ana([], diff_ana["anaValues"])
+                paj["ana"].append(new_ana)
+            elif diff_ana["action"] == "remove":
+                try:
+                    del paj["ana"][diff_ana["anaIndex"]]
+                except IndexError:
+                    pass
+            elif diff_ana["action"] == "change":
+                paj["ana"][diff_ana["anaIndex"]] = self.edit_ana(
+                    paj["ana"][diff_ana["anaIndex"]], diff_ana["anaValues"]
+                )
+
+    def get_trackback_key(self, value):
+        return None
+
+    def edit_ana(self, ana_json, ana_diff):
+        for value_action in ana_diff:
+
+            if value_action["action"] == "add":
+                if value_action["status"] == "simpleValue":
+                    if value_action["key"] == "pos":
+                        ana_json["gr.pos"] = value_action["value"]
+                    else:
+                        ana_json[value_action["key"]] = value_action["value"]
+                elif value_action["status"] == "trackbackValue":
+                    tv_key = self.get_trackback_key(value_action["to"])
+                    if tv_key:
+                        ana_json[tv_key] = value_action["to"]
+
+            elif value_action["action"] == "remove":
+                if value_action["status"] == "simpleValue":
+                    try:
+                        del ana_json[value_action["key"] if value_action["key"] != "pos" else "gr.pos"]
+                    except KeyError:
+                        pass
+                elif value_action["status"] == "trackbackValue":
+                    for (k, v) in ana_json.items():
+                        if v == value_action["from"]:
+                            del ana_json[k]
+                            break
+
+            elif value_action["action"] == "change":
+                if value_action["status"] == "simpleValue":
+                    if value_action["key"] == "pos":
+                        ana_json["gr.pos"] = value_action["to"]
+                    else:
+                        ana_json[value_action["key"]] = value_action["to"]
+                elif value_action["status"] == "trackbackValue":
+                    for (k, v) in ana_json.items():
+                        if v == value_action["from"]:
+                            ana_json[k] = value_action["to"]
+                            break
+        return ana_json
 
 
 class SequenceDiff:

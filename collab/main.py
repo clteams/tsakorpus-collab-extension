@@ -25,7 +25,12 @@ class DiffProcessor:
                 ajax_diff_json["file_name"],
                 [x["token"] for x in ajax_diff_json["tokens"]]
             )
-            ea = EditAgent(ajax_diff_json["tokens"], framing.found_pairs, ajax_diff_json["corpus_name"])
+            ea = EditAgent(
+                ajax_diff_json["tokens"],
+                framing.found_pairs,
+                ajax_diff_json["file_name"],
+                ajax_diff_json["corpus_name"]
+            )
             ea.rewrite_pairs()
             ea.write()
             self.ha.add_diff(diff_id, self.username, ajax_diff_json["tokens"], framing.found_pairs)
@@ -90,11 +95,11 @@ class HistoryAgent:
 
 
 class EditAgent:
-    def __init__(self, diff_json, agent_json, corpus_name):
+    def __init__(self, diff_json, found_pairs, file_name, corpus_name):
         self.corpus_path = "../corpus/%s/" % corpus_name
         self.diff_json_sequence = diff_json
-        self.file_name = agent_json["file_name"]
-        self.pairs = agent_json["pairs"]
+        self.file_name = file_name
+        self.pairs = found_pairs
         self.document_file_json = json.loads(open(self.corpus_path + "/" + self.file_name).read())
         self.rewrite_pairs()
 

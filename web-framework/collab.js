@@ -94,6 +94,7 @@ var CollabExtension = {
         });
         CollabExtension.buttonDialogs[bid].commonDialog.dialog("open");
     },
+    corpusName: "corpus",
     submitTokenDiff: function (bid, index) {
         // diffAna.add with anaValues=[]
         if (!CollabExtension.diffsOnStructures[bid]) {
@@ -423,6 +424,26 @@ var CollabExtension = {
         return {token: pw_wf.text(), anaData: wf_diff};
     },
     submitDiffOn: function (bid) {
+        if (/user_token=/.test(document.cookie)) {
+            var token = /user_token=([0-9a-f]+)/.exec(document.cookie)[1];
+            $.ajax({
+                type: "POST",
+                url: "/" + CollabExtension.corpusName + "/collab/authorize.json",
+                data: {
+                    diff_data: {
+                        corpus_name: CollabExtension.corpusName,
+                        file_name: CollabExtension.filesOfStructures[bid],
+                        tokens: CollabExtension.diffsOnStructures[bid]
+                    }
+                },
+                success: (function (bid_) {
+                    return function (data) {
+                        CollabExtension.buttonDialogs[bid_].commonDialog.dialog("close");
+                    }
+                })(bid),
+                dataType: dataType
+            });
+        }
         // login
         // merge diff
     },

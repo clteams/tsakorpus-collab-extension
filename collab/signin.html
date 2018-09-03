@@ -3,16 +3,16 @@
     <head>
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="../static/collab-extension/collab.css">
-        <title>{{ messages.authorize_title }} | CollabExtension</title>
+        <title>{authorize_title} | CollabExtension</title>
     </head>
 
     <body>
         <form action="POST">
-            <label for="login">{{ messages.login }}: </label> <input type="text" name="login" class="collab-auth-field">
+            <label for="login">{login}: </label> <input type="text" name="login" class="collab-auth-field">
             <br>
-            <label for="pwd">{{ messages.password }}: </label> <input type="password" name="pwd" class="collab-auth-field">
+            <label for="pwd">{password}: </label> <input type="password" name="pwd" class="collab-auth-field">
             <br>
-            <input type="submit" value="{{ messages.authorize }}" class="collab-auth-button">
+            <input type="submit" value="{authorize}" class="collab-auth-button">
         </form>
     </body>
 </html>

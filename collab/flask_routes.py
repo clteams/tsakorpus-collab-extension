@@ -82,5 +82,5 @@ def make_routes(app):
             return "Language is not supported"
 
         signin_file = xml_agent.open_file("signin.html")
-        #return render_template(signin_file, messages=language_messages[language])
-        return signin_file
+        return render_template(signin_file, messages=language_messages[language])
+        #return signin_file

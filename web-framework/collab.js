@@ -428,7 +428,7 @@ var CollabExtension = {
             var token = /user_token=([0-9a-f]+)/.exec(document.cookie)[1];
             $.ajax({
                 type: "POST",
-                url: "/" + CollabExtension.corpusName + "/collab/authorize.json",
+                url: "/" + CollabExtension.corpusName + "/collab/addDiff.json",
                 data: {
                     diff_data: {
                         corpus_name: CollabExtension.corpusName,

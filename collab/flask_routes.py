@@ -65,13 +65,13 @@ def make_routes(app):
         language = request.args["language"]
         language_messages = {
             "en": {
-                "authorize-title": "Sign in",
+                "authorize_title": "Sign in",
                 "login": "User login",
                 "password": "Password",
                 "authorize": "Authorize"
             },
             "ru": {
-                "authorize-title": "Авторизоваться",
+                "authorize_title": "Авторизоваться",
                 "login": "Имя пользоваться",
                 "password": "Пароль",
                 "authorize": "Авторизаться"

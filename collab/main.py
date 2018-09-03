@@ -100,7 +100,9 @@ class EditAgent:
         self.diff_json_sequence = diff_json
         self.file_name = file_name
         self.pairs = found_pairs
-        self.document_file_json = json.loads(open(self.corpus_path + "/" + self.file_name).read())
+        self.document_file_json = json.loads(
+            open("%s/%s.json" % (self.corpus_path, self.file_name,)).read()
+        )
         self.rewrite_pairs()
 
     def rewrite_pairs(self):

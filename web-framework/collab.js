@@ -433,7 +433,7 @@ var CollabExtension = {
                     diff_data: {
                         corpus_name: CollabExtension.corpusName,
                         file_name: CollabExtension.filesOfStructures[bid],
-                        tokens: CollabExtension.diffsOnStructures[bid]
+                        diff_data: CollabExtension.diffsOnStructures[bid]
                     }
                 },
                 success: (function (bid_) {

@@ -380,6 +380,7 @@ var CollabExtension = {
     diffsOnStructures: {},
     filesOfStructures: {},
     diffSubmitters: {},
+    authCookie: false,
     makeInitialStructure: function (sent_lang_obj) {
         var slo = sent_lang_obj;
         var slo_words = sent_lang_obj.find(".word");
@@ -424,7 +425,7 @@ var CollabExtension = {
         return {token: pw_wf.text(), anaData: wf_diff};
     },
     submitDiffOn: function (bid) {
-        if (/user_token=/.test(document.cookie)) {
+        if (/user_token=/.test(document.cookie) || Collab.authCookie) {
             var token = /user_token=([0-9a-f]+)/.exec(document.cookie)[1];
             $.ajax({
                 type: "POST",
@@ -443,8 +444,10 @@ var CollabExtension = {
                 })(bid)
             });
         }
-        // login
-        // merge diff
+        else {
+            CollabExtension.authCookie = true;
+            window.open("../collab/signin.xml?language=" + CollabExtension.interfaceLanguage, "_blank");
+        }
     },
     diffValue: {
         trackbackValue: {

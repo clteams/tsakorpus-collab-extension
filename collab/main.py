@@ -17,7 +17,7 @@ class DiffProcessor:
         self.ag = AuthenticationAgent(collab_path)
         self.username = None
         try:
-            self.username = self.ag.check_token(self.token)["token"]
+            self.username = self.ag.check_token(self.token)["user"]
             diff_id = random_hex()
             self.ha = HistoryAgent(collab_path)
             framing = FileSequenceFraming(

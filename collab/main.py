@@ -25,6 +25,9 @@ class DiffProcessor:
                 ajax_diff_json["file_name"],
                 [x["token"] for x in ajax_diff_json["tokens"]]
             )
+            ea = EditAgent(ajax_diff_json["tokens"], framing.found_pairs, ajax_diff_json["corpus_name"])
+            ea.rewrite_pairs()
+            ea.write()
             self.ha.add_diff(diff_id, self.username, ajax_diff_json["tokens"], framing.found_pairs)
             self.ha.stop()
             self.response = {
@@ -102,6 +105,11 @@ class EditAgent:
                 self.document_file_json["sentences"][si]["words"][wi],
                 self.diff_json_sequence[j]
             )
+
+    def write(self):
+        with open(self.corpus_path + "/" + self.file_name, "w") as cw:
+            cw.write(json.dumps(self.document_file_json, indent=2))
+            cw.close()
 
     def edit_sector(self, paj, diff):
         for diff_ana in diff:

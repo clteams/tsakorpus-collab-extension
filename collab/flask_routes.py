@@ -39,7 +39,7 @@ def make_routes(app):
                     "message": "invalid HTTP request"
                 })
 
-    @app.route("/collab/addDiff.json")
+    @app.route("/collab/addDiff.json", methods=["GET", "POST"])
     def collab_add_diff():
         user_token = request.cookies.get("user_token")
         if user_token is None:
@@ -54,5 +54,5 @@ def make_routes(app):
                 "code": "diff-data-not-found",
                 "message": "diff data not found"
             })
-        diff_processor = DiffProcessor(user_token, json.loads(request.args["diff-data"]))
+        diff_processor = DiffProcessor(user_token, json.loads(request.args["diff_data"]))
         return jsonify(diff_processor.response)

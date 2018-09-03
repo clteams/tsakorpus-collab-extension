@@ -175,6 +175,14 @@ class EditAgent:
         return ana_json
 
 
+class XMLAgent:
+    def __init__(self, path):
+        self.path = path
+
+    def open_file(self, file_name):
+        return open("%s/%s" % (self.path, file_name,), encoding="utf-8").read()
+
+
 class AuthenticationAgent:
     def __init__(self, path):
         self.auth_db = sqlite3.connect(path + "/authentication.sqlite3")

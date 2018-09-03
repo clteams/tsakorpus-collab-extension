@@ -2,7 +2,6 @@
 
 import json
 import random
-import string
 import sqlite3
 
 collab_path = "./web_app/collab"
@@ -12,12 +11,32 @@ def random_hex(length=30):
     return ''.join(random.choice("1234567890abcdef") for _ in range(length))
 
 
-class CollabInstance:
-    def __init__(self, auth_token=None):
-        self.auth_token = auth_token
+class DiffProcessor:
+    def __init__(self, user_token, ajax_diff_json):
+        self.token = user_token
+        self.ag = AuthenticationAgent(collab_path)
+        self.username = None
+        try:
+            self.username = self.ag.check_token(self.token)["token"]
+            diff_id = random_hex()
+            self.ha = HistoryAgent(collab_path)
+            framing = FileSequenceFraming(
+                ajax_diff_json["corpus_name"],
+                ajax_diff_json["file_name"],
+                [x["token"] for x in ajax_diff_json["tokens"]]
+            )
+            self.ha.add_diff(diff_id, self.username, ajax_diff_json["tokens"], framing.found_pairs)
+            self.ha.stop()
+            self.response = {
+                "status": 200,
+                "code": "diff-saved"
+            }
 
-    def make_edit(self, focus_sequence, diff_sequence):
-        pass
+        except ValueError:
+            self.response = {
+                "status": "error",
+                "code": "invalid-token"
+            }
 
 
 class FileSequenceFraming:
@@ -74,6 +93,7 @@ class EditAgent:
         self.file_name = agent_json["file_name"]
         self.pairs = agent_json["pairs"]
         self.document_file_json = json.loads(open(self.corpus_path + "/" + self.file_name).read())
+        self.rewrite_pairs()
 
     def rewrite_pairs(self):
         for j, pair in enumerate(self.pairs):
@@ -153,104 +173,6 @@ class EditAgent:
                             ana_json[k] = value_action["to"]
                             break
         return ana_json
-
-
-class SequenceDiff:
-    def __init__(self, diff_sequence):
-        self.diff_sequence = diff_sequence
-        self.index_based_diff = []
-
-    def edit_group(self, wf_group):
-        for j, wf in enumerate(wf_group):
-            in_sentence = wf["in_sentence"]
-            if "sentence_index" not in wf:
-                sentence_index = -1 if not j else -9999
-            else:
-                sentence_index = wf["sentence_index"]
-
-            for ana_index in enumerate(self.diff_sequence[j]):
-                if self.diff_sequence[j][ana_index] is None:
-                    continue
-                for diff_key in self.diff_sequence[j][ana_index].diff:
-                    if diff_key == "trackbacks":
-                        continue
-                    dk_value = self.diff_sequence[j][ana_index].diff[diff_key]
-                    if diff_key == "pos":
-                        wf_group[j]["ana"][ana_index]["gr.pos"] = dk_value
-                    elif diff_key == "wf":
-                        wf_group[j]["wf"] = dk_value
-                    elif diff_key in ["lex", "parts", "gloss"]:
-                        wf_group[j]["ana"][ana_index][diff_key] = dk_value
-
-                for (tb_key, tb_value) in self.diff_sequence[j][ana_index].diff["trackbacks"].items():
-                    for (ana_key, ana_value) in wf["ana"][ana_index].items():
-                        if ana_value == tb_value:
-                            self.diff_sequence[j][ana_index].reverse_trackback(tb_key, ana_key)
-                            wf_group[j]["ana"][ana_index][ana_key] = tb_value
-
-            self.index_based_diff.append([(in_sentence, sentence_index), self.diff_sequence[j]])
-
-        return wf_group
-
-    def summarize_diff(self, parent_diff_id):
-        diff_data = {
-            "parent_diff": parent_diff_id,
-            "current_diff": random_hex(),
-            "diff_sequence": self.index_based_diff
-        }
-        return diff_data
-
-
-class TokenDiff:
-    def __init__(self, diff_json_dict):
-        self.analyses = []
-        for j, ana in enumerate(diff_json_dict):
-            if ana is not None:
-                self.analyses.append(TokenAnaDiff(j, ana))
-            else:
-                self.analyses.append(None)
-
-
-class TokenAnaDiff:
-    def __init__(self, ana_index, diff_json_dict):
-        self.ana_index = ana_index
-        self.position = None
-        self.diff = diff_json_dict
-        # wf, lex, parts, gloss, pos, trackbacks -> {...}
-        self.diff["gloss_index"] = self.build_gloss_index_diff(self.diff["parts"], self.diff["gloss"])
-        self.trackback_diffs = {}
-        for (f, t) in self.diff["trackbacks"]:
-            self.trackback_diffs[f] = t
-        self.tb_reversed = {}
-
-    @staticmethod
-    def build_gloss_index_diff(parts_diff, gloss_diff):
-        gloss_index_diff = []
-        for part in range(2):
-            pd_split = parts_diff[part].split("-")
-            gd_split = gloss_diff[part].split("-")
-            if len(pd_split) != len(gd_split):
-                raise ValueError()
-            gloss_index_diff.append(
-                "-".join(["%s{%s}" % (pd_split[i], gd_split[i],) for i in range(len(pd_split))]) + "-"
-            )
-        return gloss_index_diff
-
-    def reverse_trackback(self, from_value, role_name):
-        self.tb_reversed[role_name] = (from_value, self.trackback_diffs[from_value])
-
-    def build_diff(self):
-        diff_data = {
-            "ana_index": self.ana_index
-        }
-        for diff_key in self.diff:
-            if diff_key == "trackbacks":
-                continue
-            else:
-                diff_data[diff_key] = self.diff[diff_key]
-        for diff_key in self.diff["trackbacks"]:
-            diff_data[diff_key] = self.diff["trackbacks"][diff_key]
-        return diff_data
 
 
 class AuthenticationAgent:

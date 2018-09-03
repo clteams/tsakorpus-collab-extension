@@ -441,7 +441,7 @@ var CollabExtension = {
                         CollabExtension.buttonDialogs[bid_].commonDialog.dialog("close");
                     }
                 })(bid),
-                dataType: dataType
+                dataType: "json"
             });
         }
         // login

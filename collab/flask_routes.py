@@ -6,19 +6,19 @@ from .main import *
 
 
 def make_routes(app):
-    @app.route("/collab/authorize.json")
+    @app.route("/collab/authorize.json", methods=["POST"])
     def collab_authorize():
-        if not request.args:
+        if not request.form:
             return jsonify({
                 "status": "error",
                 "code": "no-arguments",
                 "message": "received no arguments"
             })
         else:
-            if "login" in request.args and "pwd" in request.args:
+            if "login" in request.form and "pwd" in request.form:
                 agent = AuthenticationAgent(collab_path)
                 try:
-                    token = agent.authorize(request.args["login"], request.args["pwd"])
+                    token = agent.authorize(request.form["login"], request.form["pwd"])
                     agent.stop()
                     resp = app.make_response(redirect('/'))
                     expire_date = datetime.datetime.now()

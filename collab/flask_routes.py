@@ -48,7 +48,7 @@ def make_routes(app):
                 "code": "user-token-not-found",
                 "message": "user token not found"
             })
-        if "diff-data" not in request.args:
+        if "diff_data" not in request.args:
             return jsonify({
                 "status": "error",
                 "code": "diff-data-not-found",

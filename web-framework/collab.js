@@ -430,18 +430,17 @@ var CollabExtension = {
                 type: "POST",
                 url: "/" + CollabExtension.corpusName + "/collab/addDiff.json",
                 data: {
-                    diff_data: {
+                    diff_data: JSON.stringify({
                         corpus_name: CollabExtension.corpusName,
                         file_name: CollabExtension.filesOfStructures[bid],
-                        diff_data: CollabExtension.diffsOnStructures[bid]
-                    }
+                        tokens: CollabExtension.diffsOnStructures[bid]
+                    })
                 },
                 success: (function (bid_) {
                     return function (data) {
                         CollabExtension.buttonDialogs[bid_].commonDialog.dialog("close");
                     }
-                })(bid),
-                dataType: "json"
+                })(bid)
             });
         }
         // login

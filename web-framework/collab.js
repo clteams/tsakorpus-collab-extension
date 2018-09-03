@@ -446,7 +446,10 @@ var CollabExtension = {
         }
         else {
             CollabExtension.authCookie = true;
-            window.open("../collab/signin.xml?language=" + CollabExtension.interfaceLanguage, "_blank");
+            window.open(
+                "/" + CollabExtension.corpusName + "/collab/signin.xml?language=" + CollabExtension.interfaceLanguage,
+                "_blank"
+            );
         }
     },
     diffValue: {

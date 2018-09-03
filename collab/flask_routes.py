@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-from flask import redirect, request, jsonify
+from flask import jsonify, redirect, render_template, request
 import datetime
 import json
 from .main import *
@@ -56,3 +56,30 @@ def make_routes(app):
             })
         diff_processor = DiffProcessor(user_token, json.loads(request.form["diff_data"]))
         return jsonify(diff_processor.response)
+
+    @app.route("/collab/signin.xml")
+    def collab_signin_xml():
+        xml_agent = XMLAgent(collab_path)
+        if "language" not in request.args:
+            return "Invalid request"
+        language = request.args["language"]
+        language_messages = {
+            "en": {
+                "authorize-title": "Sign in",
+                "login": "User login",
+                "password": "Password",
+                "authorize": "Authorize"
+            },
+            "ru": {
+                "authorize-title": "Авторизоваться",
+                "login": "Имя пользоваться",
+                "password": "Пароль",
+                "authorize": "Авторизаться"
+            },
+        }
+
+        if language not in language_messages:
+            return "Language is not supported"
+
+        signin_file = xml_agent.open_file("signin.html")
+        return render_template(signin_file, messages=language_messages[language])

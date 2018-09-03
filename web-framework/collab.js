@@ -425,7 +425,7 @@ var CollabExtension = {
         return {token: pw_wf.text(), anaData: wf_diff};
     },
     submitDiffOn: function (bid) {
-        if (/user_token=/.test(document.cookie) || Collab.authCookie) {
+        if (/user_token=/.test(document.cookie) || CollabExtension.authCookie) {
             var token = /user_token=([0-9a-f]+)/.exec(document.cookie)[1];
             $.ajax({
                 type: "POST",

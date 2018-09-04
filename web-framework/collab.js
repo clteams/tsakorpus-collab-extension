@@ -3,6 +3,8 @@ var CollabExtension = {
         var cx_main = $(".cx_main");
         for (var i = 0; i < cx_main.length; i ++) {
             var local_cx = cx_main.eq(i);
+            console.log(local_cx.find(".expand.edit_parent").length)
+            console.log(local_cx.find(".expand.edit_parent").length === 0)
             if (local_cx.find(".expand.edit_parent").length === 0) {
                 var data_nsent = local_cx.find(".expand")[0].getAttribute('data-nsent');
                 var bid = CollabExtension.createEditButtonID();

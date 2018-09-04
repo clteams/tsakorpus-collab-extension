@@ -88,14 +88,16 @@ def make_routes(app):
                 "login": "User login",
                 "password": "Password",
                 "authorize": "Authorize",
-                "signup": "Sign up a new account"
+                "signup": "Sign up a new account",
+                "language_code": "en"
             },
             "ru": {
                 "authorize_title": "Авторизоваться",
                 "login": "Имя пользоваться",
                 "password": "Пароль",
                 "authorize": "Авторизоваться",
-                "signup": "Зарегистрировать новый аккаунт"
+                "signup": "Зарегистрировать новый аккаунт",
+                "language_code": "ru"
             },
         }
 
@@ -108,7 +110,8 @@ def make_routes(app):
             login=language_messages[language]["login"],
             password=language_messages[language]["password"],
             authorize=language_messages[language]["authorize"],
-            signup=language_messages[language]["signup"]
+            signup=language_messages[language]["signup"],
+            language_code=language_messages[language]["language_code"]
         )
 
     @app.route("/collab/signup.xml")

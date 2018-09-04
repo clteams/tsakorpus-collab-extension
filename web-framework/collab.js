@@ -546,5 +546,7 @@ var CollabExtension = {
         "submitTokenDiff": {
             "ru": "Сохранить"
         }
-    }
+    },
+    appendInterval: 50,
+    start: setInterval(CollabExtension.appendButtons, CollabExtension.appendInterval)
 };

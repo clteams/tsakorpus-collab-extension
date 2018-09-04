@@ -59,11 +59,17 @@ def make_routes(app):
 
     @app.route("/collab/createNewUser.json", methods=["POST"])
     def collab_new_user():
-        if "login" not in request.form or "password" not in request.form:
+        if "login" not in request.form or "password" not in request.form or "repeat" not in request.form:
             return jsonify({
                 "status": "error",
                 "code": "invalid-data",
                 "message": "Login/password was not specified"
+            })
+        elif request.form["password"] != request.form["repeat"]:
+            return jsonify({
+                "status": "error",
+                "code": "passwords-matching-failed",
+                "message": "Passwords do not match each other"
             })
         user_name = request.form["login"]
         user_pwd = request.form["password"]
@@ -125,12 +131,14 @@ def make_routes(app):
                 "signup_title": "Sign up",
                 "login": "User login",
                 "password": "Password",
+                "repeat_password": "Repeat password",
                 "signup": "Sign up"
             },
             "ru": {
                 "signup_title": "Зарегистрироваться",
                 "login": "Имя пользоваться",
                 "password": "Пароль",
+                "repeat_password": "Повтор пароля",
                 "signup": "Зарегистрироваться"
             },
         }

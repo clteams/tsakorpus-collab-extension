@@ -224,6 +224,15 @@ class AuthenticationAgent:
         except TypeError:
             raise ValueError("No such user found in the database")
 
+    def add_user(self, login, password):
+        try:
+            self.auth_cursor.execute(
+                "insert into credentials values (?, ?, ?, ?)",
+                (login, password, "-", "-",)
+            )
+        except sqlite3.OperationalError as sqe:
+            raise ValueError("Unknown DB error occured: " + str(sqe))
+
     def check_token(self, token):
         try:
             username, = self.auth_cursor.execute("select login from credentials where token=?", (token,)).fetchone()

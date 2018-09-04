@@ -87,13 +87,15 @@ def make_routes(app):
                 "authorize_title": "Sign in",
                 "login": "User login",
                 "password": "Password",
-                "authorize": "Authorize"
+                "authorize": "Authorize",
+                "signup": "Sign up a new account"
             },
             "ru": {
                 "authorize_title": "Авторизоваться",
                 "login": "Имя пользоваться",
                 "password": "Пароль",
-                "authorize": "Авторизоваться"
+                "authorize": "Авторизоваться",
+                "signup": "Зарегистрировать новый аккаунт"
             },
         }
 

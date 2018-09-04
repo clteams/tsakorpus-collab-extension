@@ -114,7 +114,7 @@ class EditAgent:
             )
 
     def write(self):
-        with open(self.corpus_path + "/" + self.file_name, "w") as cw:
+        with open(self.corpus_path + "/" + self.file_name + ".json", "w") as cw:
             cw.write(json.dumps(self.document_file_json, indent=2))
             cw.close()
 

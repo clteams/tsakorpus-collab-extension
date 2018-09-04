@@ -111,7 +111,7 @@ def make_routes(app):
         )
 
     @app.route("/collab/signup.xml")
-    def collab_signin_xml():
+    def collab_signup_xml():
         xml_agent = XMLAgent(collab_path)
         if "language" not in request.args:
             return "Invalid request"

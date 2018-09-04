@@ -140,8 +140,8 @@ def make_routes(app):
 
         signin_file = xml_agent.open_file("signup.html")
         return signin_file.format(
-            authorize_title=language_messages[language]["authorize_title"],
+            signup_title=language_messages[language]["signup_title"],
             login=language_messages[language]["login"],
             password=language_messages[language]["password"],
-            authorize=language_messages[language]["authorize"]
+            signup=language_messages[language]["signup"]
         )

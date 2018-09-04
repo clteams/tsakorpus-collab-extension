@@ -226,10 +226,12 @@ class AuthenticationAgent:
 
     def add_user(self, login, password):
         try:
+            new_token = random_hex()
             self.auth_cursor.execute(
                 "insert into credentials values (?, ?, ?, ?)",
-                (login, password, "-", "-",)
+                (login, password, "-", new_token,)
             )
+            return {"token": new_token}
         except sqlite3.OperationalError as sqe:
             raise ValueError("Unknown DB error occured: " + str(sqe))
 

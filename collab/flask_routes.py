@@ -107,7 +107,8 @@ def make_routes(app):
             authorize_title=language_messages[language]["authorize_title"],
             login=language_messages[language]["login"],
             password=language_messages[language]["password"],
-            authorize=language_messages[language]["authorize"]
+            authorize=language_messages[language]["authorize"],
+            signup=language_messages[language]["signup"]
         )
 
     @app.route("/collab/signup.xml")

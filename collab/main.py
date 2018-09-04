@@ -98,6 +98,7 @@ class EditAgent:
     def __init__(self, diff_json, found_pairs, file_name, corpus_name):
         self.corpus_path = "../corpus/%s" % corpus_name
         self.diff_json_sequence = diff_json
+        print('diff_json_sequence:', diff_json)
         self.file_name = file_name
         self.pairs = found_pairs
         self.document_file_json = json.loads(

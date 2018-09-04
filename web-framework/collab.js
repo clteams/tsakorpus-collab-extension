@@ -15,10 +15,7 @@ var CollabExtension = {
                 CollabExtension.filesOfStructures[bid] = fos;
             }
         }
-        if (CollabExtension.defaultBindings) {
-            CollabExtension.resetDefaultBindings();
-            CollabExtension.defaultBindings = false;
-        }
+        CollabExtension.resetDefaultBindings();
     },
     resetDefaultBindings: function () {
         $(".edit_parent, .edit_glyph").unbind('click');
@@ -26,7 +23,6 @@ var CollabExtension = {
             CollabExtension.callEditPopup($(this));
         })
     },
-    defaultBindings: true,
     callTokenDialog: function (bid, index) {
         CollabExtension.buttonDialogs[bid].tokenDialogs[index].dialog("open");
     },

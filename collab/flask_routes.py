@@ -151,5 +151,6 @@ def make_routes(app):
             signup_title=language_messages[language]["signup_title"],
             login=language_messages[language]["login"],
             password=language_messages[language]["password"],
+            repeat_password=language_messages[language]["repeat_password"],
             signup=language_messages[language]["signup"]
         )

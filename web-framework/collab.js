@@ -15,11 +15,18 @@ var CollabExtension = {
                 CollabExtension.filesOfStructures[bid] = fos;
             }
         }
+        if (CollabExtension.defaultBindings) {
+            CollabExtension.resetDefaultBindings();
+            CollabExtension.defaultBindings = false;
+        }
+    },
+    resetDefaultBindings: function () {
         $(".edit_parent, .edit_glyph").unbind('click');
         $(".edit_parent").bind("click.edit_popup", function () {
             CollabExtension.callEditPopup($(this));
         })
     },
+    defaultBindings: true,
     callTokenDialog: function (bid, index) {
         CollabExtension.buttonDialogs[bid].tokenDialogs[index].dialog("open");
     },

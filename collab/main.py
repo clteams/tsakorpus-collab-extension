@@ -98,7 +98,6 @@ class EditAgent:
     def __init__(self, diff_json, found_pairs, file_name, corpus_name):
         self.corpus_path = "../corpus/%s" % corpus_name
         self.diff_json_sequence = diff_json
-        raise Exception('diff_json_sequence:', diff_json)
         self.file_name = file_name
         self.pairs = found_pairs
         self.document_file_json = json.loads(
@@ -120,6 +119,9 @@ class EditAgent:
             cw.close()
 
     def edit_sector(self, paj, diff):
+        diff = diff["diff"]
+        if diff is None:
+            return paj
         for diff_ana in diff:
             if diff_ana["action"] == "add":
                 new_ana = self.edit_ana([], diff_ana["anaValues"])

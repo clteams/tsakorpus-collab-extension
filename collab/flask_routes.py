@@ -93,7 +93,7 @@ def make_routes(app):
                 "authorize_title": "Авторизоваться",
                 "login": "Имя пользоваться",
                 "password": "Пароль",
-                "authorize": "Авторизаться"
+                "authorize": "Авторизоваться"
             },
         }
 
@@ -101,6 +101,38 @@ def make_routes(app):
             return "Language is not supported"
 
         signin_file = xml_agent.open_file("signin.html")
+        return signin_file.format(
+            authorize_title=language_messages[language]["authorize_title"],
+            login=language_messages[language]["login"],
+            password=language_messages[language]["password"],
+            authorize=language_messages[language]["authorize"]
+        )
+
+    @app.route("/collab/signup.xml")
+    def collab_signin_xml():
+        xml_agent = XMLAgent(collab_path)
+        if "language" not in request.args:
+            return "Invalid request"
+        language = request.args["language"]
+        language_messages = {
+            "en": {
+                "signup_title": "Sign up",
+                "login": "User login",
+                "password": "Password",
+                "signup": "Sign up"
+            },
+            "ru": {
+                "signup_title": "Зарегистрироваться",
+                "login": "Имя пользоваться",
+                "password": "Пароль",
+                "signup": "Зарегистрироваться"
+            },
+        }
+
+        if language not in language_messages:
+            return "Language is not supported"
+
+        signin_file = xml_agent.open_file("signup.html")
         return signin_file.format(
             authorize_title=language_messages[language]["authorize_title"],
             login=language_messages[language]["login"],

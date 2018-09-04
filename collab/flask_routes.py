@@ -57,6 +57,25 @@ def make_routes(app):
         diff_processor = DiffProcessor(user_token, json.loads(request.form["diff_data"]))
         return jsonify(diff_processor.response)
 
+    @app.route("/collab/createNewUser.json", methods=["POST"])
+    def collab_new_user():
+        if "login" not in request.form or "password" not in request.form:
+            return jsonify({
+                "status": "error",
+                "code": "invalid-data",
+                "message": "Login/password was not specified"
+            })
+        user_name = request.form["login"]
+        user_pwd = request.form["password"]
+        agent = AuthenticationAgent(collab_path)
+        creation = agent.add_user(user_name, user_pwd)
+        agent.stop()
+        resp = app.make_response(redirect('/'))
+        expire_date = datetime.datetime.now()
+        expire_date = expire_date + datetime.timedelta(days=90)
+        resp.set_cookie("user_token", creation["token"], expires=expire_date)
+        return resp
+
     @app.route("/collab/signin.xml")
     def collab_signin_xml():
         xml_agent = XMLAgent(collab_path)

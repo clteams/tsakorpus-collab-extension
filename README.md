@@ -3,5 +3,5 @@ The [CollabEdit](https://github.com/prodotiscus/tsakorpus-collab-extension "Coll
   - enables making instant annotation edits on query results
   - edits on query results are inserted as **diff**-objects into the database
   - editors are being authorized and they take logins
-  - thus all edits on a single document may be represented as cascade sequence of diffs
-  - all diffs are referred to the matching user account
+  - thus, all edits on a single document may be represented as cascade sequence of diffs
+  - every diff-object is referred to the matching user account

@@ -39,6 +39,8 @@ Server-side code is installed into current (i.e. `/var/www/tsakorpus/search/web_
 $ cp -r /home/my_user/collab .
 ```
 
+## Edit \_\_init\_\_.py
+
 Open `__init__.py` file (do it like `vim __init__.py`) and put this string into the bottom of import statements:
 ```python3
 from .collab import *
@@ -48,3 +50,15 @@ And another string into the bottom of the whole file:
 ```python3
 flask_routes.make_routes(app)
 ```
+
+## Configuration
+
+Parameters (`corpusName` etc.) may be configured within `collab.js` file:
+```bash
+$ cd static/collab-extension
+$ vim collab.js
+```
+
+## Permission errors
+
+Possible permission errors related to Apache rw access can be resolved using `chmod` and `chown` instructions.

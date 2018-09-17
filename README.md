@@ -2,7 +2,7 @@
 The [CollabExt](https://github.com/prodotiscus/tsakorpus-collab-extension "CollabExt") (third-party) extension is a wiki-tool for [Tsakorpus](https://bitbucket.org/tsakorpus/tsakonian_corpus_platform "Tsakorpus") platform:
   - enables making instant annotation edits on query results
   - edits on query results are inserted as **diff**-objects into the database
-  - editors are being authorized and they take logins
+  - editors are being authorized in order to make edits and they take logins
   - thus, all edits on a single document may be represented as cascade sequence of diffs
   - every diff-object is referred to the matching user account
 

@@ -5,3 +5,46 @@ The [CollabEdit](https://github.com/prodotiscus/tsakorpus-collab-extension "Coll
   - editors are being authorized and they take logins
   - thus, all edits on a single document may be represented as cascade sequence of diffs
   - every diff-object is referred to the matching user account
+
+# Installation
+## Clone the repository
+First, you should clone the repo into your local machine, e.g.:
+
+```bash
+$ cd /home/my_user
+$ git clone https://github.com/prodotiscus/tsakorpus-collab-extension collab
+```
+
+## Install files into Tsakorpus folder
+
+After that, change your directory to the root directory of Tsakorpus (`/var/www/tsakorpus` here):
+
+```bash
+$ cd /var/www/tsakorpus
+```
+
+```bash
+$ cd search/web_app
+```
+
+Then front-end content should be installed into `static` folder:
+
+```bash
+$ cp /home/my_user/collab/web-framework static/collab-extension
+```
+
+Server-side code is installed into current (i.e. `/var/www/tsakorpus/search/web_app`) folder directly:
+
+```bash
+$ cp -r /home/my_user/collab .
+```
+
+Open `__init__.py` file (do it like `vim __init__.py`) and put this string into the bottom of import statements:
+```python3
+from .collab import *
+```
+
+And another string into the bottom of the whole file:
+```python3
+flask_routes.make_routes(app)
+```

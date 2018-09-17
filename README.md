@@ -1,5 +1,5 @@
 # Introduction
-The [CollabEdit](https://github.com/prodotiscus/tsakorpus-collab-extension "CollabEdit extension") (third-party) extension is a wiki-tool for [Tsakorpus](https://bitbucket.org/tsakorpus/tsakonian_corpus_platform "Tsakorpus") platform:
+The [CollabExt](https://github.com/prodotiscus/tsakorpus-collab-extension "CollabExt") (third-party) extension is a wiki-tool for [Tsakorpus](https://bitbucket.org/tsakorpus/tsakonian_corpus_platform "Tsakorpus") platform:
   - enables making instant annotation edits on query results
   - edits on query results are inserted as **diff**-objects into the database
   - editors are being authorized and they take logins
@@ -68,4 +68,4 @@ Possible permission errors related to Apache rw access can be resolved by editin
 
 # License
 
-CollabEdit extension is distributed under the terms of Apache 2.0 License (see `LICENSE`).
+CollabExt is distributed under the terms of Apache 2.0 License (see `LICENSE`).

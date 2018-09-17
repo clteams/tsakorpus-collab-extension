@@ -51,6 +51,9 @@ And another string into the bottom of the whole file:
 flask_routes.make_routes(app)
 ```
 
+## Restart the server
+In case of using Apache server, restarting is needed for the previous changes to be applied: `service apache2 restart`.
+
 ## Configuration
 
 Parameters (`corpusName` etc.) may be configured within `collab.js` file:
@@ -61,7 +64,7 @@ $ vim collab.js
 
 ## Permission errors
 
-Possible permission errors related to Apache rw access can be resolved by editing Apache configuration files as well as by using `chmod` and `chown` instructions.
+Possible permission errors related to Apache rw access can be resolved by editing Apache configuration files (in case of using Apache) as well as by using `chmod` and `chown` instructions.
 
 # License
 

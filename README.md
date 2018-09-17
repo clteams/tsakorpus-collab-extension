@@ -62,3 +62,7 @@ $ vim collab.js
 ## Permission errors
 
 Possible permission errors related to Apache rw access can be resolved using `chmod` and `chown` instructions.
+
+# License
+
+CollabEdit extension is distributed under the terms of Apache 2.0 License (see `LICENSE`).

@@ -61,7 +61,7 @@ $ vim collab.js
 
 ## Permission errors
 
-Possible permission errors related to Apache rw access can be resolved using `chmod` and `chown` instructions.
+Possible permission errors related to Apache rw access can be resolved by editing Apache configuration files as well as by using `chmod` and `chown` instructions.
 
 # License
 

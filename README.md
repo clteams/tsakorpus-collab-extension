@@ -27,7 +27,7 @@ $ cd /var/www/tsakorpus
 $ cd search/web_app
 ```
 
-Then front-end content should be installed into `static` folder:
+Front-end content should be installed into `static` folder:
 
 ```bash
 $ cp /home/my_user/collab/web-framework static/collab-extension
@@ -41,7 +41,7 @@ $ cp -r /home/my_user/collab .
 
 ## Edit \_\_init\_\_.py
 
-Open `__init__.py` file (do it like `vim __init__.py`) and put this string into the bottom of import statements:
+Open `__init__.py` file (do it like `vim __init__.py`), then append this string to the bottom of import statements:
 ```python3
 from .collab import *
 ```

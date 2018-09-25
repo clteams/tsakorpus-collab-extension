@@ -309,6 +309,7 @@ var CollabExtension = {
         //
         deployed_ana += '<input type="hidden" class="ana-values-events" value="[]">';
         deployed_ana += '</div>';
+
         return deployed_ana;
     },
     anaGroupAdd: {

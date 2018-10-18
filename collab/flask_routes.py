@@ -136,7 +136,7 @@ def make_routes(app):
             },
             "ru": {
                 "signup_title": "Зарегистрироваться",
-                "login": "Имя пользоваться",
+                "login": "Имя пользователя",
                 "password": "Пароль",
                 "repeat_password": "Повтор пароля",
                 "signup": "Зарегистрироваться"
